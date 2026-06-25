@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #b8ccb4;
+  --color-on-primary: #243423;
+  --color-secondary: #eec058;
+  --color-on-secondary: #402d00;
+  --color-background: #14130f;
+  --color-on-background: #e7e2da;
+  --color-surface: #14130f;
+  --color-on-surface: #e7e2da;
+  --color-surface-container: #21201b;
+  --color-surface-container-high: #2b2a25;
+  --color-surface-container-highest: #36352f;
+  --color-surface-container-low: #1d1c17;
+  --color-surface-container-lowest: #0f0e0a;
+  --color-on-surface-variant: #c4c8bf;
+  --color-surface-variant: #36352f;
+  --color-outline: #8e928a;
+  --color-outline-variant: #434842;
+  --color-primary-container: #0a1a0b;
+  --color-on-primary-container: #728570;
+  --color-inverse-surface: #e7e2da;
+  --color-inverse-on-surface: #32302b;
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-whatsapp: #25D366;
+
+  /* Typography Fonts */
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+  --font-accent: "Inter", sans-serif;
+
+  /* Spacing and Constants */
+  --spacing-stack-lg: 32px;
+  --spacing-section-padding-mobile: 60px;
+  --spacing-gutter: 24px;
+  --spacing-stack-sm: 8px;
+  --spacing-max-width: 1280px;
+  --spacing-section-padding: 100px;
+  --spacing-stack-md: 16px;
+}
+
+/* Custom CSS Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4a843;
+  border-radius: 4px;
+}
+
+/* Custom glow effects */
+.gold-glow {
+  box-shadow: 0 0 10px rgba(212, 168, 67, 0);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.gold-glow:hover {
+  box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+  border-color: #d4a843;
+}
+
+.gold-glow-hover:hover {
+  box-shadow: 0 0 10px rgba(238, 192, 88, 0.5);
+  border-color: #eec058;
+  transition: all 0.3s ease;
+}
+
+/* Pulse animation for WhatsApp button */
+.pulse-whatsapp {
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+/* Global Styles */
+body {
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-body);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Page transitions overlay canvas */
+.webgl-canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}

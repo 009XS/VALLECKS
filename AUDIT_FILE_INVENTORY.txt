@@ -1,0 +1,50 @@
+﻿.gitignore
+.oxlintrc.json
+AUDIT_FILE_INVENTORY.txt
+index.html
+package-lock.json
+package.json
+README.md
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+public\favicon.svg
+public\icons.svg
+public\static\css\theme-transitions.css
+public\static\img\Ahuyenta-inseguridad-a-turistas-de-La-Marquesa3.jpg
+public\static\img\caballo.jpg
+public\static\img\Canopy-Las-Golondrinas-1-e1635561376796 (1).jpg
+public\static\img\Canopy-Las-Golondrinas-1-e1635561376796.jpg
+public\static\img\comida.jpg
+public\static\img\d1-1-1024x683.jpg
+public\static\img\d2-1.jpg
+public\static\img\gotcha-01-768x576.jpg
+public\static\img\la-marquesa-c.jpg
+public\static\img\maxresdefault.jpg
+public\static\img\Rancho Viejo.jpg
+public\static\img\unnamed (1).jpg
+public\static\img\unnamed (2).jpg
+public\static\img\unnamed.jpg
+public\static\js\theme-transitions.js
+src\App.tsx
+src\index.css
+src\main.tsx
+src\assets\hero.png
+src\assets\react.svg
+src\assets\vite.svg
+src\components\FloatingWA\FloatingWA.tsx
+src\components\Footer\Footer.tsx
+src\components\Navigation\Navbar.tsx
+src\components3d\AttractionModel.tsx
+src\components3d\FluidGlass.tsx
+src\components3d\ForestScene.tsx
+src\components3d\GlobalCanvas.tsx
+src\components3d\SteamingDish.tsx
+src\components3d\TerrainMap.tsx
+src\pages\Atracciones\Atracciones.tsx
+src\pages\Barra\Barra.tsx
+src\pages\Galeria\Galeria.tsx
+src\pages\Home\Home.tsx
+src\pages\Menu\Menu.tsx
+src\pages\Ubicacion\Ubicacion.tsx
