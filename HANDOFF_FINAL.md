@@ -1,90 +1,103 @@
-# Engineering Handoff Document - La Marquesa (Rancho Viejo)
+# Documento de Entrega Técnica y Handoff Final
 
-This document details the final handoff specifications, technical procedures, and operational checklists for **La Marquesa - Valle de Rancho Viejo** SPA.
-
----
-
-## 1. Project Summary & Status
-* **Project Name:** La Marquesa / Valle de Rancho Viejo React SPA
-* **Current Version:** `1.0.0` (Production Ready)
-* **Public Staging URL:** `https://valle-rancho-viejo.netlify.app`
-* **GitHub Repository:** `https://github.com/009XS/VALLECKS.git`
-* **Deployment Provider:** Netlify
-* **Production Readiness:** **YES**. Staging QA and build checks have passed successfully.
+Este documento detalla todas las especificaciones técnicas del proyecto, los procedimientos de compilación y despliegue, y las guías de mantenimiento para **La Marquesa - Valle de Rancho Viejo** SPA.
 
 ---
 
-## 2. Technology Stack
+## 1. Resumen del Proyecto y Estatus
+* **Nombre del Proyecto:** La Marquesa / Valle de Rancho Viejo React + TypeScript + Vite SPA.
+* **URL Pública de Netlify:** https://valle-rancho-viejo.netlify.app
+* **Repositorio en GitHub:** https://github.com/009XS/VALLECKS.git
+* **Proveedor de Alojamiento:** Netlify
+* **Estatus Final de QA:** **APROBADO**. Se ha verificado la integridad visual y técnica (linter limpio, compilación limpia y visualización responsiva).
+
+---
+
+## 2. Stack Tecnológico
 * **Framework:** React 19 (TypeScript)
-* **Build tool:** Vite 8
-* **Styling:** Tailwind CSS v4 & Vanilla CSS
-* **Animations:** GSAP (ScrollTrigger)
-* **3D Engines:** Three.js / React Three Fiber / Drei
-* **Linter:** oxlint
+* **Herramienta de Compilación (Bundler):** Vite 8
+* **Estilos (CSS):** Tailwind CSS v4 & Vanilla CSS
+* **Animaciones:** GSAP (GreenSock Animation Suite)
+* **Modelador 3D:** Three.js con wrappers React Three Fiber (R3F) & @react-three/drei
+* **Linter de Código:** oxlint
 
 ---
 
-## 3. Deployment & Build Specifications
-* **Node Version Requirement:** Node.js v18.0.0 or superior (v20+ recommended).
-* **Package Manager:** `npm` (utilizes lockfile `package-lock.json`).
-* **Installation Command:** `npm install`
-* **Local Development Command:** `npm run dev`
-* **Build Command:** `npm run build`
-* **Publish Directory:** `dist`
-* **Verification Command:** `npm run verify` (runs linter and build sequentially).
-* **Local Preview Command:** `npm run preview` (starts static local web server on port `4173`).
+## 3. Instrucciones de Ejecución Local y Despliegue
+
+### Requisitos del Sistema:
+* Node.js v18.0.0 o superior (v20+ recomendado).
+* Administrador de paquetes: `npm`.
+
+### Comandos de npm:
+* **Instalación de Dependencias:**
+  ```bash
+  npm install
+  ```
+* **Servidor de Desarrollo Local:**
+  ```bash
+  npm run dev
+  ```
+* **Compilación de Producción (Genera la carpeta `dist`):**
+  ```bash
+  npm run build
+  ```
+* **Linting de Código:**
+  ```bash
+  npm run lint
+  ```
+* **Verificación General (Lint + Build):**
+  ```bash
+  npm run verify
+  ```
+* **Vista Previa de Producción Local:**
+  ```bash
+  npm run preview
+  ```
+
+### Procedimiento de Despliegue:
+El despliegue está configurado mediante integración continua (CI/CD) con GitHub.
+1. Realizar los cambios necesarios en el código de forma local.
+2. Hacer commit y empujar (`git push`) los cambios a la rama `main` del repositorio remoto.
+3. Netlify detectará la nueva actualización de forma automática, ejecutará `npm run build` y actualizará el despliegue público en menos de un minuto.
 
 ---
 
-## 4. Pending Decisions & SEO Configuration
+## 4. Guía de Mantenimiento y Actualización de Contenido
 
-The project is fully complete and ready for deployment. The only pending configuration is the **Final Production Domain** configuration. 
+### Reemplazo y Optimización de Fotografías:
+Para evitar la ralentización del sitio, todas las imágenes estáticas están en formato `.webp` optimizado.
+1. Coloque las nuevas imágenes en formato original (PNG o JPG) dentro de la carpeta `public/static/img/`.
+2. Ejecute el script de optimización:
+   ```bash
+   npm run optimize:images
+   ```
+   *Esto convertirá y redimensionará automáticamente las fotos a la carpeta `public/static/img/optimized/`.*
+3. Abra el archivo de configuración de imágenes [src/config/images.ts](file:///C:/Users/anara/Desktop/valle_copia/src/config/images.ts) y actualice la referencia correspondiente para apuntar al archivo optimizado.
 
-### Current SEO & Configuration File Status:
-
-| File | Status | Dependency on Domain |
-| :--- | :--- | :--- |
-| `index.html` | **95% Final**. Standard SEO description, viewport, and Open Graph previews are fully set. | Requires injecting `<link rel="canonical">` once the production domain is confirmed. |
-| `public/robots.txt` | **90% Final**. Crawl settings are set. | Requires replacing the `Sitemap: https://vallederanchoviejo.mx/...` reference with the final URL. |
-| `public/sitemap.xml` | **90% Final**. Structure is set for state-based single-page root. | Requires replacing the `https://vallederanchoviejo.mx/` placeholder with the final URL. |
-| `DEPLOYMENT.md` | **100% Final**. Outlines stack, CLI commands, and SPA redirection. | None. |
-| `RELEASE_CHECKLIST.md`| **100% Final**. Step-by-step checklist for release verification. | None. |
-
-*See [docs/FINAL_PRODUCTION_DECISION.md](file:///C:/Users/anara/Desktop/valle_copia/docs/FINAL_PRODUCTION_DECISION.md) for full action steps to finalize the domain configuration.*
-
----
-
-## 5. How to Update Content Later
-
-All content is structured within standard React components under `src/`. Here are the primary locations:
-* **Images:** Main image catalog is referenced in [src/config/images.ts](file:///C:/Users/anara/Desktop/valle_copia/src/config/images.ts). All images are optimized under `public/static/img/optimized/`. To add new images:
-  1. Place original images in `public/static/img/`.
-  2. Run image optimization script: `npm run optimize:images`.
-  3. Reference optimized `.webp` path in `src/config/images.ts`.
-* **Atracciones:** Content items list is declared inside [src/pages/Atracciones/Atracciones.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Atracciones/Atracciones.tsx).
-* **Menú:** Category lists and items are declared in [src/pages/Menu/Menu.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Menu/Menu.tsx).
-* **La Barra:** Cocktail ingredients and details are declared in [src/pages/Barra/Barra.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Barra/Barra.tsx).
-* **Galería:** Photo album arrays are declared in [src/pages/Galeria/Galeria.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Galeria/Galeria.tsx).
+### Edición de Textos:
+* **Atracciones:** Se modifican directamente en [src/pages/Atracciones/Atracciones.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Atracciones/Atracciones.tsx).
+* **Menú Gastronómico:** Los platillos y categorías se editan en [src/pages/Menu/Menu.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Menu/Menu.tsx).
+* **La Barra:** La coctelería y las cervezas se actualizan en [src/pages/Barra/Barra.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Barra/Barra.tsx).
+* **Galería:** La lista de fotos se declara en [src/pages/Galeria/Galeria.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Galeria/Galeria.tsx).
+* **Contacto y Rutas:** Los datos se encuentran en [src/pages/Ubicacion/Ubicacion.tsx](file:///C:/Users/anara/Desktop/valle_copia/src/pages/Ubicacion/Ubicacion.tsx).
 
 ---
 
-## 6. Release & Verification Workflows
-
-### How to Deploy:
-1. Update domain configurations (sitemap, canonical, robots) if domain is changed.
-2. Commit changes to Git.
-3. Push to `main` branch. GitHub integrations on Netlify or Vercel will automatically trigger a clean build.
-
-### How to Verify after Deploy:
-Follow the verification steps in [RELEASE_CHECKLIST.md](file:///C:/Users/anara/Desktop/valle_copia/RELEASE_CHECKLIST.md) (check console for errors, verify responsive navbar drawer, confirm sitemap accessibility, verify Escape key closing lightboxes).
-
----
-
-## 7. Critical Constraints: What Not to Touch
+## 5. Optimizaciones Implementadas y Restricciones Críticas
 
 > [!CAUTION]
-> Avoid making structural changes to the following without proper QA and testing:
+> **No modifique o eluda los siguientes mecanismos para evitar problemas de rendimiento severos:**
 > 
-> * **WebGL Render Pausing:** Hooks (`usePageVisibility`, `useElementVisibility`, `useReducedMotion`) control the render loops of Three.js. Do not bypass or remove these checks, as it will lead to high background GPU/CPU usage.
-> * **DPR Caps:** All `Canvas` components limit device pixel ratio (`dpr={[1, 2]}`) to prevent rendering slowdowns on Retina/4K displays.
-> * **manualChunks Config:** In [vite.config.ts](file:///C:/Users/anara/Desktop/valle_copia/vite.config.ts), manual chunks partition heavy 3D vendors to keep the main bundle lightweight. Altering this can cause huge main bundle size warnings.
+> * **WebGL Render Loop Control:** El renderizado 3D de los modelos se pausa automáticamente cuando la pestaña está en segundo plano o el componente sale de la vista en pantalla (implementado mediante hooks de visibilidad). Esto reduce a 0% el uso innecesario de GPU/CPU.
+> * **Capping de DPR:** Todos los Canvas de Three.js limitan la densidad de píxeles (`dpr={[1, 2]}`) para evitar la sobrecarga de rendering en dispositivos con pantallas Retina o 4K.
+> * **manualChunks (Vite):** En [vite.config.ts](file:///C:/Users/anara/Desktop/valle_copia/vite.config.ts), las librerías pesadas (React, Three, GSAP) están fragmentadas de forma independiente para acelerar la velocidad de carga inicial de la aplicación.
+
+---
+
+## 6. Confirmaciones Clave Pendientes con el Cliente
+1. **Número de WhatsApp:** Validar si `+52 55 3877 3469` es el número correcto de atención.
+2. **Ubicación Física:** Corroborar si la dirección exacta registrada en la página de Ubicación corresponde a la locación física en Maps.
+3. **Platillos y Cócteles:** Validar si los platillos listados corresponden exactamente al menú real del rancho.
+4. **Licencia de Alcohol:** Confirmar si se pueden promover bebidas alcohólicas o si se debe centrar el listado en bebidas sin alcohol (mocktails).
+5. **Compra de Dominio Personalizado:** Definir si se adquirirá un dominio como `vallederanchoviejo.com` o similar para actualizar canonicals y metadatos SEO.
