@@ -18,6 +18,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
         {/* Brand Column */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <button
+            type="button"
             onClick={() => handleNavClick('home')}
             className="font-display text-2xl text-secondary font-bold mb-4 hover:scale-105 transition-transform duration-300 cursor-pointer"
           >
@@ -33,36 +34,42 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
           <h4 className="font-accent text-xs font-bold text-secondary tracking-widest mb-2">NAVEGACIÓN</h4>
           <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-center md:text-left">
             <button
+              type="button"
               onClick={() => handleNavClick('home')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >
               Inicio
             </button>
             <button
+              type="button"
               onClick={() => handleNavClick('atracciones')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >
               Atracciones
             </button>
             <button
+              type="button"
               onClick={() => handleNavClick('menu')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >
               Menú
             </button>
             <button
+              type="button"
               onClick={() => handleNavClick('barra')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >
               La Barra
             </button>
             <button
+              type="button"
               onClick={() => handleNavClick('galeria')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >
               Galería
             </button>
             <button
+              type="button"
               onClick={() => handleNavClick('ubicacion')}
               className="font-body text-sm text-on-background/70 hover:text-secondary hover:translate-x-1 transition-all cursor-pointer"
             >

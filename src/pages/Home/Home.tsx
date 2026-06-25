@@ -82,6 +82,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
           <div className="w-full md:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
             {/* Exploration Card */}
             <button
+              type="button"
               onClick={() => handleLinkClick('atracciones')}
               className="flex flex-col items-center p-8 border border-secondary/10 rounded-lg bg-[#0a1a0b]/85 gold-glow transition-all duration-300 cursor-pointer"
             >
@@ -91,6 +92,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
             </button>
             {/* Kitchen Card */}
             <button
+              type="button"
               onClick={() => handleLinkClick('menu')}
               className="flex flex-col items-center p-8 border border-secondary/10 rounded-lg bg-[#0a1a0b]/85 gold-glow transition-all duration-300 cursor-pointer"
             >

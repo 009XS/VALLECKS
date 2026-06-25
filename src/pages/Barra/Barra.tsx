@@ -150,10 +150,11 @@ export const Barra: React.FC = () => {
             {/* Right: Selection Cards */}
             <div className="lg:col-span-6 space-y-6">
               {cocktails.map((cocktail) => (
-                <div
+                <button
                   key={cocktail.id}
+                  type="button"
                   onClick={() => setActiveCocktail(cocktail.id)}
-                  className={`p-6 border rounded-lg bg-[#111810] transition-all duration-300 cursor-pointer cocktail-card flex flex-col justify-between ${
+                  className={`p-6 border rounded-lg bg-[#111810] transition-all duration-300 cursor-pointer cocktail-card flex flex-col justify-between w-full text-left ${
                     activeCocktail === cocktail.id
                       ? 'border-secondary shadow-[0_0_20px_rgba(238,192,88,0.15)] bg-surface-container-high'
                       : 'border-secondary/10 hover:border-secondary/50'
@@ -177,7 +178,7 @@ export const Barra: React.FC = () => {
                       </span>
                     ))}
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>

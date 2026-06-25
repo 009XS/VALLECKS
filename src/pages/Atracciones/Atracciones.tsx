@@ -98,9 +98,10 @@ export const Atracciones: React.FC = () => {
         {/* Left Side: Cards */}
         <div className="lg:col-span-7 space-y-8">
           {attractions.map((attraction) => (
-            <div
+            <button
               key={attraction.id}
-              className={`p-6 border rounded-lg bg-surface-container/70 transition-all duration-300 cursor-pointer attraction-card flex flex-col md:flex-row gap-6 items-center ${
+              type="button"
+              className={`p-6 border rounded-lg bg-surface-container/70 transition-all duration-300 cursor-pointer attraction-card flex flex-col md:flex-row gap-6 items-center w-full text-left ${
                 activeAttraction === attraction.id
                   ? 'border-secondary shadow-[0_0_20px_rgba(238,192,88,0.15)] bg-surface-container-high'
                   : 'border-secondary/10 hover:border-secondary/50'
@@ -126,7 +127,7 @@ export const Atracciones: React.FC = () => {
                   {attraction.description}
                 </p>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 

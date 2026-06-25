@@ -11,7 +11,7 @@ interface GalleryItem {
 }
 
 export const Galeria: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const galleryImages: GalleryItem[] = [
@@ -46,6 +46,22 @@ export const Galeria: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
+  // Listen for escape key press to close lightbox
+  useEffect(() => {
+    if (!selectedItem) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedItem(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedItem]);
+
   return (
     <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-24 min-h-screen">
       {/* Header */}
@@ -62,10 +78,12 @@ export const Galeria: React.FC = () => {
       {/* Premium Uniform Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {galleryImages.map((img) => (
-          <div
+          <button
             key={img.id}
-            onClick={() => setSelectedImage(img.src)}
-            className="gallery-item overflow-hidden rounded-lg bg-[#111810] border border-transparent hover:border-secondary transition-all duration-500 shadow-lg relative group cursor-pointer aspect-[4/3]"
+            type="button"
+            onClick={() => setSelectedItem(img)}
+            className="gallery-item overflow-hidden rounded-lg bg-[#111810] border border-transparent hover:border-secondary transition-all duration-500 shadow-lg relative group cursor-pointer aspect-[4/3] w-full text-left"
+            aria-label={`Ver imagen ampliada de ${img.title}`}
           >
             <SmartImage
               src={img.src}
@@ -79,29 +97,39 @@ export const Galeria: React.FC = () => {
                 {img.title}
               </span>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
       {/* Lightbox / Modal Modal */}
-      {selectedImage && (
+      {selectedItem && (
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Imagen ampliada de ${selectedItem.title}`}
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 transition-all duration-300"
-          onClick={() => setSelectedImage(null)}
+          onClick={() => setSelectedItem(null)}
         >
           <button
-            onClick={() => setSelectedImage(null)}
+            type="button"
+            onClick={() => setSelectedItem(null)}
             className="absolute top-6 right-6 text-secondary hover:text-white p-2 rounded-full hover:bg-white/10"
-            aria-label="Cerrar"
+            aria-label="Cerrar vista ampliada"
           >
             <X className="w-8 h-8" />
           </button>
-          <div className="max-w-4xl max-h-[85vh] overflow-hidden rounded-lg shadow-2xl relative">
+          <div 
+            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-lg shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
-              src={selectedImage}
-              alt="Ampliada"
+              src={selectedItem.src}
+              alt={selectedItem.title}
               className="w-full h-full object-contain max-h-[80vh] rounded"
             />
+            <div className="absolute bottom-0 inset-x-0 bg-black/75 p-4 text-center">
+              <p className="text-on-background font-display text-lg font-medium">{selectedItem.title}</p>
+            </div>
           </div>
         </div>
       )}
