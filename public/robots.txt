@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# NOTA: Reemplazar con el dominio de producción final una vez confirmado
+Sitemap: https://vallederanchoviejo.mx/sitemap.xml
