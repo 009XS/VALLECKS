@@ -160,7 +160,11 @@ export const Menu: React.FC = () => {
                         <div className="absolute top-3 left-4 font-accent text-[9px] text-secondary font-bold tracking-widest uppercase">
                           Interactivo 3D
                         </div>
-                        <Canvas camera={{ position: [0, 0.4, 2.5], fov: 45 }}>
+                        <Canvas
+                          camera={{ position: [0, 0.4, 2.5], fov: 45 }}
+                          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+                          dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
+                        >
                           <ambientLight intensity={0.4} />
                           <directionalLight position={[5, 10, 5]} intensity={0.8} />
                           <SteamingDish />

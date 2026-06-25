@@ -167,7 +167,11 @@ export const Ubicacion: React.FC = () => {
               {activeMapTab === '3d' ? (
                 /* Relief 3D Canvas */
                 <div className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing">
-                  <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
+                  <Canvas
+                    camera={{ position: [0, 0, 4.5], fov: 45 }}
+                    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+                    dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
+                  >
                     <ambientLight intensity={0.35} />
                     <directionalLight position={[10, 10, 10]} intensity={0.9} color="#ffffff" />
                     <pointLight position={[-10, -10, -5]} intensity={0.5} color="#eec058" />

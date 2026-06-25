@@ -110,7 +110,11 @@ export const Barra: React.FC = () => {
                 </div>
 
                 <div className="w-full h-64">
-                  <Canvas camera={{ position: [0, 0.2, 2.5], fov: 45 }}>
+                  <Canvas
+                    camera={{ position: [0, 0.2, 2.5], fov: 45 }}
+                    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+                    dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
+                  >
                     <ambientLight intensity={0.4} />
                     <directionalLight position={[5, 10, 5]} intensity={1.2} color="#ffffff" />
                     <FluidGlass cocktailType={activeCocktail} />

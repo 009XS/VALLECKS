@@ -72,6 +72,7 @@ export const GlobalCanvas: React.FC<GlobalCanvasProps> = ({ currentPage }) => {
       <Canvas
         camera={{ position: [0, 2, 8], fov: 60 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        dpr={[1, 2]} // Limit device pixel ratio to 2 for high performance on Retina/4K screens
         shadows
       >
         {currentPage === 'home' ? <ForestScene /> : <DustScene />}

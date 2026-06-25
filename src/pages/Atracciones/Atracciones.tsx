@@ -132,7 +132,8 @@ export const Atracciones: React.FC = () => {
             <div className="w-full h-64 relative z-10 cursor-grab active:cursor-grabbing">
               <Canvas
                 camera={{ position: [0, 0, 4.2], fov: 45 }}
-                gl={{ antialias: true, alpha: true }}
+                gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+                dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
               >
                 <ambientLight intensity={0.4} />
                 <directionalLight position={[5, 10, 3]} intensity={1.0} color="#ffdf9f" />
