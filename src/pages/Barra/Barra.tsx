@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { FluidGlass } from '../../components3d/FluidGlass';
 import gsap from 'gsap';
 
 import { images } from '../../config/images';
-import { usePageVisibility } from '../../hooks/usePageVisibility';
-import { useElementVisibility } from '../../hooks/useElementVisibility';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface CocktailItem {
   id: 'pitufos' | 'mojito' | 'cantaritos';
@@ -19,12 +14,6 @@ interface CocktailItem {
 export const Barra: React.FC = () => {
   const [activeCocktail, setActiveCocktail] = useState<CocktailItem['id']>('pitufos');
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-
-  const isPageVisible = usePageVisibility();
-  const isElementVisible = useElementVisibility(canvasContainerRef);
-  const prefersReducedMotion = useReducedMotion();
-  const isCanvasActive = isPageVisible && isElementVisible;
 
   const cocktails: CocktailItem[] = [
     {
@@ -110,39 +99,42 @@ export const Barra: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left/Middle: 3D Visualizer */}
+            {/* Left/Middle: Premium 2D Drink Showcase */}
             <div className="lg:col-span-6 flex flex-col items-center">
-              <div className="w-full max-w-[460px] aspect-square bg-black/60 backdrop-blur-lg border border-secondary/20 rounded-2xl flex flex-col items-center justify-between p-8 shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative cursor-grab active:cursor-grabbing overflow-hidden">
+              <div className="w-full max-w-[460px] aspect-[4/5] bg-black/60 backdrop-blur-lg border border-secondary/20 rounded-2xl flex flex-col justify-between p-6 shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative overflow-hidden">
                 {/* Background Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_70%)] pointer-events-none"></div>
 
-                <div className="font-accent text-[9px] font-extrabold text-secondary tracking-widest uppercase z-10">
-                  SIMULADOR 3D DE FLUIDOS
-                </div>
+                <div className="relative z-10 w-full">
+                  <div className="text-center mb-4">
+                    <span className="font-accent text-[9px] font-extrabold text-secondary tracking-[0.25em] uppercase">
+                      PRESENTACIÓN EDITORIAL
+                    </span>
+                  </div>
 
-                <div ref={canvasContainerRef} className="w-full h-64 relative z-10">
-                  <Canvas
-                    camera={{ position: [0, 0.2, 2.5], fov: 45 }}
-                    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-                    dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
-                  >
-                    <ambientLight intensity={0.4} />
-                    <directionalLight position={[5, 10, 5]} intensity={1.2} color="#ffffff" />
-                    <FluidGlass 
-                      cocktailType={activeCocktail} 
-                      isVisible={isCanvasActive} 
-                      prefersReducedMotion={prefersReducedMotion} 
+                  {/* Drink Image Display */}
+                  <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-black/40 border border-white/5 relative shadow-inner">
+                    <img
+                      src={cocktails.find((c) => c.id === activeCocktail)?.imgSrc || ''}
+                      alt={cocktails.find((c) => c.id === activeCocktail)?.name || ''}
+                      className="w-full h-full object-cover select-none pointer-events-none transition-all duration-700 hover:scale-105"
                     />
-                  </Canvas>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+                  </div>
                 </div>
 
-                <div className="text-center z-10">
-                  <h4 className="font-display text-lg text-on-background font-semibold mb-1">
+                <div className="text-center z-10 mt-6 w-full">
+                  <h4 className="font-display text-2xl text-secondary font-bold mb-2 tracking-wide">
                     {cocktails.find((c) => c.id === activeCocktail)?.name}
                   </h4>
-                  <p className="font-body text-[11px] text-on-surface-variant/70">
-                    Mueve el cursor para interactuar con el oleaje físico del coctel.
+                  <p className="font-body text-xs text-on-surface-variant/90 max-w-sm mx-auto leading-relaxed mb-6">
+                    {cocktails.find((c) => c.id === activeCocktail)?.ingredients}
                   </p>
+                  
+                  {/* Client Confirmation Note */}
+                  <div className="border border-secondary/10 bg-secondary/5 rounded-xl p-4 text-[10px] text-on-surface-variant/80 italic leading-relaxed">
+                    Nota: La disponibilidad de alcohol en barra y menús extendidos está sujeta a confirmación final de permisos y normatividad del establecimiento.
+                  </div>
                 </div>
               </div>
             </div>

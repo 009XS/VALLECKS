@@ -8,6 +8,7 @@ interface GalleryItem {
   id: number;
   title: string;
   src: string;
+  size?: 'normal' | 'wide';
 }
 
 export const Galeria: React.FC = () => {
@@ -15,18 +16,18 @@ export const Galeria: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const galleryImages: GalleryItem[] = [
-    { id: 1, title: 'Lago Místico', src: imageAssets.lagoMistico },
-    { id: 2, title: 'Valle de Dinosaurios', src: imageAssets.valleDinosaurios },
-    { id: 3, title: 'Zorbing Extremo', src: imageAssets.zorbing },
-    { id: 4, title: 'Entrada Principal', src: imageAssets.entradaPrincipal },
-    { id: 5, title: 'Rutas en Cuatrimoto', src: imageAssets.cuatrimotos },
-    { id: 6, title: 'Tirolesa Panorámica', src: imageAssets.tirolesa },
-    { id: 7, title: 'Paseos a Caballo', src: imageAssets.paseosCaballo },
-    { id: 8, title: 'Navegación en Canoa', src: imageAssets.canoas },
-    { id: 9, title: 'Gastronomía Local', src: imageAssets.comida },
-    { id: 10, title: 'Mixología de Autor', src: imageAssets.pitufos },
-    { id: 11, title: 'Gotcha en el Bosque', src: imageAssets.gotcha },
-    { id: 12, title: 'Fogatas Nocturnas', src: imageAssets.fogatas },
+    { id: 1, title: 'Lago Místico', src: imageAssets.lagoMistico, size: 'normal' },
+    { id: 2, title: 'Valle de Dinosaurios', src: imageAssets.valleDinosaurios, size: 'wide' },
+    { id: 3, title: 'Zorbing Extremo', src: imageAssets.zorbing, size: 'normal' },
+    { id: 4, title: 'Entrada Principal', src: imageAssets.entradaPrincipal, size: 'normal' },
+    { id: 5, title: 'Rutas en Cuatrimoto', src: imageAssets.cuatrimotos, size: 'normal' },
+    { id: 6, title: 'Tirolesa Panorámica', src: imageAssets.tirolesa, size: 'normal' },
+    { id: 7, title: 'Paseos a Caballo', src: imageAssets.paseosCaballo, size: 'wide' },
+    { id: 8, title: 'Navegación en Canoa', src: imageAssets.canoas, size: 'normal' },
+    { id: 9, title: 'Gastronomía Local', src: imageAssets.comida, size: 'normal' },
+    { id: 10, title: 'Mixología de Autor', src: imageAssets.pitufos, size: 'normal' },
+    { id: 11, title: 'Gotcha en el Bosque', src: imageAssets.gotcha, size: 'wide' },
+    { id: 12, title: 'Fogatas Nocturnas', src: imageAssets.fogatas, size: 'normal' },
   ];
 
   useEffect(() => {
@@ -75,25 +76,32 @@ export const Galeria: React.FC = () => {
         <div className="w-20 h-[1.5px] bg-secondary mx-auto"></div>
       </div>
 
-      {/* Premium Uniform Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {/* Premium Dynamic Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {galleryImages.map((img) => (
           <button
             key={img.id}
             type="button"
             onClick={() => setSelectedItem(img)}
-            className="gallery-item overflow-hidden rounded-2xl bg-black/40 border border-white/5 hover:border-secondary/40 transition-all duration-500 shadow-xl relative group cursor-pointer aspect-[4/3] w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50"
+            className={`gallery-item overflow-hidden rounded-2xl bg-black/45 border border-white/5 hover:border-secondary/40 transition-all duration-500 shadow-xl relative group cursor-pointer w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 ${
+              img.size === 'wide'
+                ? 'md:col-span-2 aspect-[4/3] md:aspect-[8/3]'
+                : 'aspect-[4/3]'
+            }`}
             aria-label={`Ver imagen ampliada de ${img.title}`}
           >
             <SmartImage
               src={img.src}
               alt={img.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
             />
-            {/* Hover overlay with glassmorphism and slide-up title */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6">
+            {/* Hover overlay with mature dark-gold gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6 text-center">
               <ZoomIn className="w-8 h-8 text-secondary mb-3 transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500" />
-              <span className="font-display text-lg text-on-background font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+              <span className="font-accent text-[9px] text-secondary font-bold tracking-[0.2em] uppercase mb-1 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                VER AMPLIACIÓN
+              </span>
+              <span className="font-display text-lg text-on-background font-medium transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
                 {img.title}
               </span>
             </div>
@@ -107,27 +115,34 @@ export const Galeria: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-label={`Imagen ampliada de ${selectedItem.title}`}
-          className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-300"
+          className="fixed inset-0 bg-black/98 backdrop-blur-xl z-[100] flex items-center justify-center p-4 transition-all duration-300"
           onClick={() => setSelectedItem(null)}
         >
+          {/* Radial light glow behind the modal */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.05)_0%,transparent_70%)] pointer-events-none"></div>
+
           <button
             type="button"
             onClick={() => setSelectedItem(null)}
-            className="absolute top-6 right-6 text-secondary hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
+            className="absolute top-6 right-6 text-secondary hover:text-white p-2.5 rounded-full border border-secondary/20 hover:border-secondary hover:bg-white/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
             aria-label="Cerrar vista ampliada"
           >
-            <X className="w-8 h-8" />
+            <X className="w-7 h-7" />
           </button>
+          
           <div 
-            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(212,168,67,0.1)] relative bg-black/80"
+            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-secondary/20 shadow-[0_32px_100px_rgba(0,0,0,0.95),0_0_60px_rgba(212,168,67,0.05)] relative bg-black/85 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={selectedItem.src}
               alt={selectedItem.title}
-              className="w-full h-full object-contain max-h-[75vh]"
+              className="w-full h-full object-contain max-h-[72vh] mx-auto select-none pointer-events-none"
             />
-            <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-md border-t border-white/5 p-5 text-center">
+            <div className="bg-[#0b0e0b]/90 backdrop-blur-md border-t border-secondary/15 p-5 text-center w-full">
+              <span className="font-accent text-[9px] text-secondary font-bold tracking-[0.25em] uppercase block mb-1">
+                VALLE DE RANCHO VIEJO
+              </span>
               <p className="text-on-background font-display text-lg font-semibold tracking-wide">{selectedItem.title}</p>
             </div>
           </div>

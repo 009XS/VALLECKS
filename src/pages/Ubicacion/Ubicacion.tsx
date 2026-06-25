@@ -1,21 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { TerrainMap } from '../../components3d/TerrainMap';
+import React, { useEffect, useRef } from 'react';
 import { MessageCircle, Clock, Phone, MapPin, Navigation } from 'lucide-react';
 import gsap from 'gsap';
-import { usePageVisibility } from '../../hooks/usePageVisibility';
-import { useElementVisibility } from '../../hooks/useElementVisibility';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export const Ubicacion: React.FC = () => {
-  const [activeMapTab, setActiveMapTab] = useState<'3d' | 'google'>('3d');
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-
-  const isPageVisible = usePageVisibility();
-  const isElementVisible = useElementVisibility(canvasContainerRef);
-  const prefersReducedMotion = useReducedMotion();
-  const isCanvasActive = isPageVisible && isElementVisible;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -145,58 +133,19 @@ export const Ubicacion: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Panel: Interactive Maps with Tabs */}
+          {/* Right Panel: Premium Google Maps Container */}
           <div className="lg:col-span-7 flex flex-col map-panel">
-            {/* Tabs */}
-            <div className="flex bg-black/45 border border-white/5 border-b-0 rounded-t-2xl overflow-hidden self-start backdrop-blur-md">
-              <button
-                type="button"
-                onClick={() => setActiveMapTab('3d')}
-                className={`px-6 py-3.5 font-accent text-[9px] font-extrabold tracking-widest uppercase transition-colors cursor-pointer ${
-                  activeMapTab === '3d'
-                    ? 'bg-secondary text-on-secondary'
-                    : 'text-on-background/70 hover:text-secondary'
-                }`}
-              >
-                Relieve 3D
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveMapTab('google')}
-                className={`px-6 py-3.5 font-accent text-[9px] font-extrabold tracking-widest uppercase transition-colors cursor-pointer ${
-                  activeMapTab === 'google'
-                    ? 'bg-secondary text-on-secondary'
-                    : 'text-on-background/70 hover:text-secondary'
-                }`}
-              >
-                Google Maps
-              </button>
+            {/* Header Badge */}
+            <div className="flex bg-[#0a0e0a]/40 border border-white/5 border-b-0 rounded-t-2xl px-6 py-3.5 self-start backdrop-blur-md">
+              <span className="font-accent text-[9px] font-extrabold tracking-widest text-secondary uppercase">
+                UBICACIÓN EN GOOGLE MAPS
+              </span>
             </div>
 
             {/* Map Area */}
-            <div className="flex-grow min-h-[480px] relative rounded-b-2xl rounded-tr-2xl overflow-hidden border border-secondary/20 bg-black/60 shadow-[0_24px_60px_rgba(0,0,0,0.8)]">
-              {activeMapTab === '3d' ? (
-                /* Relief 3D Canvas */
-                <div ref={canvasContainerRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing">
-                  <Canvas
-                    camera={{ position: [0, 0, 4.5], fov: 45 }}
-                    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-                    dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
-                  >
-                    <ambientLight intensity={0.35} />
-                    <directionalLight position={[10, 10, 10]} intensity={0.9} color="#ffffff" />
-                    <pointLight position={[-10, -10, -5]} intensity={0.5} color="#eec058" />
-                    <TerrainMap 
-                      isVisible={isCanvasActive} 
-                      prefersReducedMotion={prefersReducedMotion} 
-                    />
-                  </Canvas>
-                  <div className="absolute bottom-4 left-4 z-10 font-accent text-[8px] text-secondary/90 font-bold bg-black/85 px-3 py-1.5 rounded-lg backdrop-blur-md border border-white/5 uppercase tracking-widest">
-                    Arrastra para rotar el relieve
-                  </div>
-                </div>
-              ) : (
-                /* Google Maps Dark Iframe */
+            <div className="flex-grow min-h-[480px] relative rounded-b-2xl rounded-tr-2xl overflow-hidden border border-secondary/20 bg-black/60 shadow-[0_24px_60px_rgba(0,0,0,0.8)] flex flex-col">
+              <div className="relative flex-grow">
+                {/* Google Maps Dark Iframe */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10000.0!2d-99.3760123!3d19.282657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cdf7830204e0fb%3A0xc66ea8c83e33a58a!2sCentro%20Recreativo%20Rancho%20Viejo!5e0!3m2!1ses-419!2smx!4v1718347890123!5m2!1ses-419!2smx"
                   className="absolute inset-0 w-full h-full border-0"
@@ -206,7 +155,12 @@ export const Ubicacion: React.FC = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Google Maps"
                 ></iframe>
-              )}
+              </div>
+              
+              {/* Address Confirmation Note */}
+              <div className="bg-[#0c0f0c] border-t border-white/5 px-6 py-4 text-[10px] text-on-surface-variant/80 italic leading-relaxed">
+                Nota para el cliente: Por favor confirme si la nomenclatura exacta de la Carretera y el código postal coinciden con los registros locales para optimizar la navegación GPS de los visitantes.
+              </div>
             </div>
           </div>
         </div>

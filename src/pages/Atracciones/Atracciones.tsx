@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { AttractionModel } from '../../components3d/AttractionModel';
 import { MessageCircle } from 'lucide-react';
-import gsap from 'gsap';
-
 import { images } from '../../config/images';
 import { SmartImage } from '../../components/ui/SmartImage';
-import { usePageVisibility } from '../../hooks/usePageVisibility';
-import { useElementVisibility } from '../../hooks/useElementVisibility';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface AttractionItem {
   id: 'gotcha' | 'cuatrimotos' | 'tirolesas' | 'caballo';
@@ -21,12 +14,6 @@ interface AttractionItem {
 export const Atracciones: React.FC = () => {
   const [activeAttraction, setActiveAttraction] = useState<AttractionItem['id']>('gotcha');
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-
-  const isPageVisible = usePageVisibility();
-  const isElementVisible = useElementVisibility(canvasContainerRef);
-  const prefersReducedMotion = useReducedMotion();
-  const isCanvasActive = isPageVisible && isElementVisible;
 
   const attractions: AttractionItem[] = [
     {
@@ -60,25 +47,21 @@ export const Atracciones: React.FC = () => {
   ];
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.attraction-header',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
-      );
-      gsap.fromTo(
-        '.attraction-card',
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
-      );
-      gsap.fromTo(
-        '.attraction-viewer-container',
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out', delay: 0.3 }
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
+    import('gsap').then(({ default: gsap }) => {
+      const ctx = gsap.context(() => {
+        gsap.fromTo(
+          '.attraction-header',
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+        );
+        gsap.fromTo(
+          '.attraction-card',
+          { opacity: 0, x: -30 },
+          { opacity: 1, x: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
+        );
+      }, containerRef);
+      return () => ctx.revert();
+    });
   }, []);
 
   return (
@@ -132,41 +115,40 @@ export const Atracciones: React.FC = () => {
           ))}
         </div>
 
-        {/* Right Side: Sticky 3D Model Viewer */}
+        {/* Right Side: Sticky Attraction Spotlight Panel */}
         <div className="lg:col-span-5 lg:sticky lg:top-28 attraction-viewer-container">
-          <div className="border border-secondary/20 rounded-2xl bg-black/60 backdrop-blur-lg p-8 flex flex-col items-center shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative overflow-hidden h-[500px]">
+          <div className="border border-secondary/20 rounded-2xl bg-black/60 backdrop-blur-lg p-6 flex flex-col justify-between shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative overflow-hidden h-[520px]">
             {/* Ambient Background Glow */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_70%)] pointer-events-none"></div>
 
-            <h3 className="font-accent text-[10px] font-bold text-secondary uppercase tracking-widest mb-4 z-10">
-              EXPLORADOR 3D INTERACTIVO
-            </h3>
-            
-            {/* Main Interactive 3D Canvas */}
-            <div ref={canvasContainerRef} className="w-full h-64 relative z-10 cursor-grab active:cursor-grabbing">
-              <Canvas
-                camera={{ position: [0, 0, 4.2], fov: 45 }}
-                gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-                dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
-              >
-                <ambientLight intensity={0.4} />
-                <directionalLight position={[5, 10, 3]} intensity={1.0} color="#ffdf9f" />
-                <pointLight position={[-5, -5, -2]} intensity={0.5} color="#3de273" />
-                <AttractionModel 
-                  type={activeAttraction} 
-                  isVisible={isCanvasActive} 
-                  prefersReducedMotion={prefersReducedMotion} 
+            <div className="relative z-10 w-full">
+              <span className="font-accent text-[9px] font-bold text-secondary uppercase tracking-[0.2em] block mb-3 text-center">
+                VISTA DETALLADA
+              </span>
+              
+              {/* Featured Image display */}
+              <div className="w-full h-64 rounded-xl overflow-hidden bg-black/40 border border-white/5 relative shadow-inner">
+                <SmartImage
+                  src={attractions.find((a) => a.id === activeAttraction)?.imgSrc || ''}
+                  alt={attractions.find((a) => a.id === activeAttraction)?.title || ''}
+                  className="w-full h-full object-cover select-none pointer-events-none"
                 />
-              </Canvas>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="px-2.5 py-0.5 bg-secondary/15 text-secondary text-[8px] font-extrabold uppercase tracking-widest rounded border border-secondary/35 backdrop-blur-md">
+                    {attractions.find((a) => a.id === activeAttraction)?.tag}
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* Description Info */}
-            <div className="text-center mt-4 z-10 flex-grow flex flex-col justify-end w-full">
-              <h4 className="font-display text-lg text-on-background font-semibold mb-1">
-                {attractions.find((a) => a.id === activeAttraction)?.title.split(':')[0]}
+            <div className="text-center z-10 w-full flex flex-col justify-end">
+              <h4 className="font-display text-xl text-on-background font-bold mb-2 tracking-wide">
+                {attractions.find((a) => a.id === activeAttraction)?.title}
               </h4>
-              <p className="font-body text-[11px] text-on-surface-variant/70 max-w-sm mb-6 mx-auto">
-                Arrastra para rotar e interactuar con el modelo 3D representativo.
+              <p className="font-body text-xs text-on-surface-variant/90 max-w-sm mb-6 mx-auto leading-relaxed">
+                Descubre esta actividad exclusiva en el Valle de Rancho Viejo. Contamos con guías y equipo de protección certificado.
               </p>
               <a
                 href="https://wa.me/525538773469"
@@ -204,3 +186,4 @@ export const Atracciones: React.FC = () => {
     </div>
   );
 };
+

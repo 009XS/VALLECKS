@@ -10,10 +10,6 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Split heavy 3D engine libraries
-            if (id.includes('three') || id.includes('@react-three')) {
-              return 'vendor-three';
-            }
             // Split animation core
             if (id.includes('gsap')) {
               return 'vendor-gsap';

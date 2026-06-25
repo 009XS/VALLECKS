@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navigation/Navbar';
 import { Footer } from './components/Footer/Footer';
 import { FloatingWA } from './components/FloatingWA/FloatingWA';
-import { GlobalCanvas } from './components3d/GlobalCanvas';
 
 // Eagerly loaded critical page
 import { Home } from './pages/Home/Home';
@@ -96,9 +95,6 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-on-background relative">
-      {/* 3D WebGL Background Canvas */}
-      <GlobalCanvas currentPage={currentPage} />
-
       {/* Global Navigation Bar */}
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
 

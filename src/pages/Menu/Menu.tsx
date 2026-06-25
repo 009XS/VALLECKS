@@ -1,14 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { SteamingDish } from '../../components3d/SteamingDish';
 import { Flame, Coffee, Heart } from 'lucide-react';
 import gsap from 'gsap';
 
 import { images } from '../../config/images';
 import { SmartImage } from '../../components/ui/SmartImage';
-import { usePageVisibility } from '../../hooks/usePageVisibility';
-import { useElementVisibility } from '../../hooks/useElementVisibility';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface MenuItem {
   name: string;
@@ -25,12 +20,6 @@ interface MenuCategory {
 
 export const Menu: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-
-  const isPageVisible = usePageVisibility();
-  const isElementVisible = useElementVisibility(canvasContainerRef);
-  const prefersReducedMotion = useReducedMotion();
-  const isCanvasActive = isPageVisible && isElementVisible;
 
   const menuCategories: MenuCategory[] = [
     {
@@ -168,24 +157,22 @@ export const Menu: React.FC = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                       </div>
                     ) : item.name === 'Café de Olla' ? (
-                      /* Interactive 3D jar for Cafe de Olla */
-                      <div ref={canvasContainerRef} className="h-[240px] w-full bg-black/30 relative flex items-center justify-center border-b border-white/5 cursor-grab active:cursor-grabbing overflow-hidden">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_70%)] pointer-events-none"></div>
-                        <div className="absolute top-4 left-4 font-accent text-[9px] text-secondary font-bold tracking-widest uppercase z-10">
-                          Interactivo 3D
+                      /* Editorial Spotlight Panel for Café de Olla */
+                      <div className="h-[240px] w-full bg-[#110e08]/90 relative flex flex-col items-center justify-center border-b border-white/5 overflow-hidden p-6 text-center">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.1)_0%,transparent_75%)] pointer-events-none"></div>
+                        {/* Elegant double-thin border frame */}
+                        <div className="absolute inset-4 border border-secondary/15 rounded-xl pointer-events-none"></div>
+                        <div className="absolute inset-5 border border-secondary/5 rounded-xl pointer-events-none"></div>
+                        
+                        <div className="relative z-10 flex flex-col items-center">
+                          <Coffee className="w-12 h-12 text-secondary mb-3 opacity-90" />
+                          <span className="font-accent text-[9px] text-secondary font-bold tracking-[0.25em] uppercase mb-1">
+                            ELIXIR DE LA CASA
+                          </span>
+                          <span className="font-display text-xs text-on-surface-variant/80 italic max-w-[200px]">
+                            "Infusionado lentamente al calor del fogón de leña"
+                          </span>
                         </div>
-                        <Canvas
-                          camera={{ position: [0, 0.4, 2.5], fov: 45 }}
-                          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-                          dpr={[1, 2]} // Limit device pixel ratio for GPU performance on high-DPI screens
-                        >
-                          <ambientLight intensity={0.4} />
-                          <directionalLight position={[5, 10, 5]} intensity={0.8} />
-                          <SteamingDish 
-                            isVisible={isCanvasActive} 
-                            prefersReducedMotion={prefersReducedMotion} 
-                          />
-                        </Canvas>
                       </div>
                     ) : null}
 
