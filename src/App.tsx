@@ -1,30 +1,47 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navigation/Navbar';
 import { Footer } from './components/Footer/Footer';
 import { FloatingWA } from './components/FloatingWA/FloatingWA';
 import { GlobalCanvas } from './components3d/GlobalCanvas';
 
-// Pages
+// Eagerly loaded critical page
 import { Home } from './pages/Home/Home';
-import { Atracciones } from './pages/Atracciones/Atracciones';
-import { Menu } from './pages/Menu/Menu';
-import { Barra } from './pages/Barra/Barra';
-import { Galeria } from './pages/Galeria/Galeria';
-import { Ubicacion } from './pages/Ubicacion/Ubicacion';
+
+// Lazy loaded non-critical subpages for bundle size reduction
+const Atracciones = lazy(() => import('./pages/Atracciones/Atracciones').then(m => ({ default: m.Atracciones })));
+const Menu = lazy(() => import('./pages/Menu/Menu').then(m => ({ default: m.Menu })));
+const Barra = lazy(() => import('./pages/Barra/Barra').then(m => ({ default: m.Barra })));
+const Galeria = lazy(() => import('./pages/Galeria/Galeria').then(m => ({ default: m.Galeria })));
+const Ubicacion = lazy(() => import('./pages/Ubicacion/Ubicacion').then(m => ({ default: m.Ubicacion })));
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { startRouteTransition, endRouteTransition } from './lib/performance';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Lightweight premium fallback skeleton for lazy loading
+const PageFallback = () => (
+  <div className="w-full min-h-[60vh] flex flex-col items-center justify-center bg-background px-gutter">
+    <div className="flex flex-col items-center max-w-xs w-full text-center">
+      <div className="w-8 h-8 border-2 border-secondary/20 border-t-secondary rounded-full animate-spin mb-4"></div>
+      <span className="font-accent text-[10px] font-bold text-secondary uppercase tracking-widest block">
+        Cargando Experiencia...
+      </span>
+    </div>
+  </div>
+);
 
 function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const pageContainerRef = useRef<HTMLDivElement>(null);
 
-  // Smooth virtual page transition on page change
+  // Smooth virtual page transition on page change with performance telemetry
   useEffect(() => {
     const element = pageContainerRef.current;
     if (!element) return;
+
+    startRouteTransition(currentPage);
 
     // Scroll to top instantly
     window.scrollTo(0, 0);
@@ -36,7 +53,15 @@ function App() {
     const anim = gsap.fromTo(
       element,
       { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.45, 
+        ease: 'power2.out',
+        onComplete: () => {
+          endRouteTransition(currentPage);
+        }
+      }
     );
 
     return () => {
@@ -74,7 +99,9 @@ function App() {
 
       {/* Main Content Area with transition wrapper */}
       <main ref={pageContainerRef} className="flex-grow">
-        {renderPageContent()}
+        <Suspense fallback={<PageFallback />}>
+          {renderPageContent()}
+        </Suspense>
       </main>
 
       {/* Global Footer */}

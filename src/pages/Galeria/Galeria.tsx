@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, ZoomIn } from 'lucide-react';
 import gsap from 'gsap';
+import { images as imageAssets } from '../../config/images';
 
 interface GalleryItem {
   id: number;
@@ -12,19 +13,19 @@ export const Galeria: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const images: GalleryItem[] = [
-    { id: 1, title: 'Lago Místico', src: 'static/img/Ahuyenta-inseguridad-a-turistas-de-La-Marquesa3.jpg' },
-    { id: 2, title: 'Valle de Dinosaurios', src: 'static/img/d1-1-1024x683.jpg' },
-    { id: 3, title: 'Zorbing Extremo', src: 'static/img/unnamed (1).jpg' },
-    { id: 4, title: 'Entrada Principal', src: 'static/img/Rancho Viejo.jpg' },
-    { id: 5, title: 'Rutas en Cuatrimoto', src: 'static/img/maxresdefault.jpg' },
-    { id: 6, title: 'Tirolesa Panorámica', src: 'static/img/Canopy-Las-Golondrinas-1-e1635561376796.jpg' },
-    { id: 7, title: 'Paseos a Caballo', src: 'static/img/la-marquesa-c.jpg' },
-    { id: 8, title: 'Navegación en Canoa', src: 'static/img/unnamed.jpg' },
-    { id: 9, title: 'Gastronomía Local', src: 'static/img/comida.jpg' },
-    { id: 10, title: 'Mixología de Autor', src: 'static/img/d2-1.jpg' },
-    { id: 11, title: 'Gotcha en el Bosque', src: 'static/img/gotcha-01-768x576.jpg' },
-    { id: 12, title: 'Fogatas Nocturnas', src: 'static/img/unnamed (2).jpg' },
+  const galleryImages: GalleryItem[] = [
+    { id: 1, title: 'Lago Místico', src: imageAssets.lagoMistico },
+    { id: 2, title: 'Valle de Dinosaurios', src: imageAssets.valleDinosaurios },
+    { id: 3, title: 'Zorbing Extremo', src: imageAssets.zorbing },
+    { id: 4, title: 'Entrada Principal', src: imageAssets.entradaPrincipal },
+    { id: 5, title: 'Rutas en Cuatrimoto', src: imageAssets.cuatrimotos },
+    { id: 6, title: 'Tirolesa Panorámica', src: imageAssets.tirolesa },
+    { id: 7, title: 'Paseos a Caballo', src: imageAssets.paseosCaballo },
+    { id: 8, title: 'Navegación en Canoa', src: imageAssets.canoas },
+    { id: 9, title: 'Gastronomía Local', src: imageAssets.comida },
+    { id: 10, title: 'Mixología de Autor', src: imageAssets.pitufos },
+    { id: 11, title: 'Gotcha en el Bosque', src: imageAssets.gotcha },
+    { id: 12, title: 'Fogatas Nocturnas', src: imageAssets.fogatas },
   ];
 
   useEffect(() => {
@@ -59,7 +60,7 @@ export const Galeria: React.FC = () => {
 
       {/* Premium Uniform Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {images.map((img) => (
+        {galleryImages.map((img) => (
           <div
             key={img.id}
             onClick={() => setSelectedImage(img.src)}

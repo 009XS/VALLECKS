@@ -4,6 +4,8 @@ import { SteamingDish } from '../../components3d/SteamingDish';
 import { Flame, Coffee, Heart } from 'lucide-react';
 import gsap from 'gsap';
 
+import { images } from '../../config/images';
+
 interface MenuItem {
   name: string;
   description: string;
@@ -29,7 +31,7 @@ export const Menu: React.FC = () => {
           name: 'Cecina',
           description: 'Tradicional de Yecapixtla, asada al carbón con cebollitas y guacamole.',
           tag: 'Especialidad',
-          imgSrc: 'static/img/comida.jpg',
+          imgSrc: images.comida,
         },
         {
           name: 'Arrachera',
@@ -113,7 +115,7 @@ export const Menu: React.FC = () => {
           <img
             alt="Menú background"
             className="w-full h-full object-cover opacity-50"
-            src="static/img/comida.jpg"
+            src={images.comida}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background"></div>
         </div>

@@ -3,6 +3,8 @@ import { Canvas } from '@react-three/fiber';
 import { FluidGlass } from '../../components3d/FluidGlass';
 import gsap from 'gsap';
 
+import { images } from '../../config/images';
+
 interface CocktailItem {
   id: 'pitufos' | 'mojito' | 'cantaritos';
   name: string;
@@ -21,7 +23,7 @@ export const Barra: React.FC = () => {
       name: 'Pitufos',
       ingredients: 'Vodka, blue curaçao, refresco de limón, escarchado de cereza.',
       tags: ['Dulce', 'Fresco'],
-      imgSrc: 'static/img/d2-1.jpg', // Using gallery mixology image
+      imgSrc: images.pitufos, // Using gallery mixology image
     },
     {
       id: 'mojito',

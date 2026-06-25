@@ -4,6 +4,8 @@ import { AttractionModel } from '../../components3d/AttractionModel';
 import { MessageCircle } from 'lucide-react';
 import gsap from 'gsap';
 
+import { images } from '../../config/images';
+
 interface AttractionItem {
   id: 'gotcha' | 'cuatrimotos' | 'tirolesas' | 'caballo';
   tag: string;
@@ -22,28 +24,28 @@ export const Atracciones: React.FC = () => {
       tag: 'ESTRATEGIA Y ACCIÓN',
       title: 'Gotcha: Paintball en el Bosque',
       description: 'Adéntrate en escenarios naturales diseñados para la máxima adrenalina. Nuestro campo de gotcha aprovecha la topografía real de la montaña, ofreciendo barricadas de madera rústica y refugios naturales para una experiencia táctica inmersiva.',
-      imgSrc: 'static/img/gotcha-01-768x576.jpg',
+      imgSrc: images.gotcha,
     },
     {
       id: 'cuatrimotos',
       tag: 'EXPLORACIÓN A MOTOR',
       title: 'Cuatrimotos: Senderos de Oyameles',
       description: 'Domina los caminos escarpados a bordo de nuestros vehículos todo terreno. Recorre kilómetros de senderos privados flanqueados por majestuosos oyameles, descubriendo rincones ocultos y miradores espectaculares de la región.',
-      imgSrc: 'static/img/maxresdefault.jpg',
+      imgSrc: images.cuatrimotos,
     },
     {
       id: 'tirolesas',
       tag: 'VUELO EN LAS ALTURAS',
       title: 'Tirolesas: Vistas Panorámicas',
       description: 'Siente la libertad de volar sobre la copa de los árboles. Nuestras líneas de acero atraviesan los valles ofreciendo una perspectiva inigualable del paisaje boscoso, combinando seguridad de primera clase con vistas sobrecogedoras.',
-      imgSrc: 'static/img/Canopy-Las-Golondrinas-1-e1635561376796.jpg',
+      imgSrc: images.tirolesa,
     },
     {
       id: 'caballo',
       tag: 'TRANQUILIDAD Y NATURALEZA',
       title: 'Paseo a Caballo',
       description: 'Disfruta de paseos guiados a caballo por los senderos más hermosos y tranquilos del valle. Una gran experiencia para conectar con la naturaleza, apta para principiantes y jinetes experimentados.',
-      imgSrc: 'static/img/caballo.jpg',
+      imgSrc: images.caballo,
     },
   ];
 
