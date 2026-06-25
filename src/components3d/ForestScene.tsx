@@ -1,8 +1,17 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { logCanvasActiveState } from '../lib/performance';
 
-export const ForestScene: React.FC = () => {
+interface ForestSceneProps {
+  isVisible?: boolean;
+  prefersReducedMotion?: boolean;
+}
+
+export const ForestScene: React.FC<ForestSceneProps> = ({
+  isVisible = true,
+  prefersReducedMotion = false,
+}) => {
   const { mouse } = useThree();
   const trunkRef = useRef<THREE.InstancedMesh>(null);
   const foliageRef = useRef<THREE.InstancedMesh>(null);
@@ -85,12 +94,17 @@ export const ForestScene: React.FC = () => {
     return [pos, sp];
   }, []);
 
+  useEffect(() => {
+    logCanvasActiveState('GlobalCanvas-ForestScene', isVisible);
+  }, [isVisible]);
+
   // Frame animation loop
   useFrame((state) => {
+    if (!isVisible) return;
     const time = state.clock.getElapsedTime();
 
-    // 1. Animate particles (mist & fireflies floating)
-    if (particlesRef.current) {
+    // 1. Animate particles (mist & fireflies floating) - skip under reduced motion
+    if (!prefersReducedMotion && particlesRef.current) {
       const positionAttribute = particlesRef.current.geometry.attributes.position;
       for (let i = 0; i < particleCount; i++) {
         // Drift upwards
@@ -102,7 +116,7 @@ export const ForestScene: React.FC = () => {
         positionAttribute.setX(i, currentX + Math.sin(time * 0.5 + i) * 0.005);
         positionAttribute.setZ(i, currentZ + Math.cos(time * 0.5 + i) * 0.005);
 
-        // Reset if too high
+        // Reset if too low
         if (positionAttribute.getY(i) > 12) {
           positionAttribute.setY(i, -5);
         }
@@ -112,12 +126,18 @@ export const ForestScene: React.FC = () => {
 
     // 2. Dynamic camera/light movement based on mouse
     if (state.camera) {
-      // Subtle parallax effect on camera
-      const targetX = mouse.x * 2.5;
-      const targetY = 2 + mouse.y * 1.5;
-      state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.03);
-      state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.03);
-      state.camera.lookAt(0, 1, 0);
+      if (prefersReducedMotion) {
+        state.camera.position.x = 0;
+        state.camera.position.y = 2;
+        state.camera.lookAt(0, 1, 0);
+      } else {
+        // Subtle parallax effect on camera
+        const targetX = mouse.x * 2.5;
+        const targetY = 2 + mouse.y * 1.5;
+        state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.03);
+        state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.03);
+        state.camera.lookAt(0, 1, 0);
+      }
     }
   });
 
@@ -142,21 +162,23 @@ export const ForestScene: React.FC = () => {
       </instancedMesh>
 
       {/* Fog/Fireflies Particles */}
-      <points ref={particlesRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[positions, 3]}
+      {!prefersReducedMotion && (
+        <points ref={particlesRef}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              args={[positions, 3]}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            color="#d4a843"
+            size={0.15}
+            transparent
+            opacity={0.65}
+            blending={THREE.AdditiveBlending}
           />
-        </bufferGeometry>
-        <pointsMaterial
-          color="#d4a843"
-          size={0.15}
-          transparent
-          opacity={0.65}
-          blending={THREE.AdditiveBlending}
-        />
-      </points>
+        </points>
+      )}
 
       {/* Lighting Setup */}
       <ambientLight intensity={0.15} color="#141c15" />

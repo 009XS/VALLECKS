@@ -3,10 +3,19 @@ import { Canvas } from '@react-three/fiber';
 import { TerrainMap } from '../../components3d/TerrainMap';
 import { MessageCircle, Clock, Phone, MapPin, Navigation } from 'lucide-react';
 import gsap from 'gsap';
+import { usePageVisibility } from '../../hooks/usePageVisibility';
+import { useElementVisibility } from '../../hooks/useElementVisibility';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export const Ubicacion: React.FC = () => {
   const [activeMapTab, setActiveMapTab] = useState<'3d' | 'google'>('3d');
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+
+  const isPageVisible = usePageVisibility();
+  const isElementVisible = useElementVisibility(canvasContainerRef);
+  const prefersReducedMotion = useReducedMotion();
+  const isCanvasActive = isPageVisible && isElementVisible;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -166,7 +175,7 @@ export const Ubicacion: React.FC = () => {
             <div className="flex-grow min-h-[480px] relative rounded-b-xl rounded-tr-xl overflow-hidden border border-secondary/20 bg-[#0d140e] shadow-2xl">
               {activeMapTab === '3d' ? (
                 /* Relief 3D Canvas */
-                <div className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing">
+                <div ref={canvasContainerRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing">
                   <Canvas
                     camera={{ position: [0, 0, 4.5], fov: 45 }}
                     gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -175,7 +184,10 @@ export const Ubicacion: React.FC = () => {
                     <ambientLight intensity={0.35} />
                     <directionalLight position={[10, 10, 10]} intensity={0.9} color="#ffffff" />
                     <pointLight position={[-10, -10, -5]} intensity={0.5} color="#eec058" />
-                    <TerrainMap />
+                    <TerrainMap 
+                      isVisible={isCanvasActive} 
+                      prefersReducedMotion={prefersReducedMotion} 
+                    />
                   </Canvas>
                   <div className="absolute bottom-4 left-4 z-10 font-accent text-[9px] text-secondary/80 font-bold bg-background/80 px-3 py-1 rounded backdrop-blur border border-secondary/15">
                     Arrastra para rotar el relieve

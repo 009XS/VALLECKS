@@ -1,16 +1,37 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { logCanvasActiveState } from '../lib/performance';
 
 interface AttractionModelProps {
   type: 'gotcha' | 'cuatrimotos' | 'tirolesas' | 'caballo';
+  isVisible?: boolean;
+  prefersReducedMotion?: boolean;
 }
 
-export const AttractionModel: React.FC<AttractionModelProps> = ({ type }) => {
+export const AttractionModel: React.FC<AttractionModelProps> = ({
+  type,
+  isVisible = true,
+  prefersReducedMotion = false,
+}) => {
   const modelRef = useRef<THREE.Group>(null);
+
+  useEffect(() => {
+    logCanvasActiveState('AttractionModel', isVisible);
+  }, [isVisible]);
 
   // Spin the model slowly
   useFrame((state) => {
+    if (!isVisible) return;
+
+    if (prefersReducedMotion) {
+      if (modelRef.current) {
+        modelRef.current.rotation.y = 0;
+        modelRef.current.rotation.x = 0;
+      }
+      return;
+    }
+
     if (modelRef.current) {
       modelRef.current.rotation.y = state.clock.getElapsedTime() * 0.8;
       modelRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.15;

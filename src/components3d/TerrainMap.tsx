@@ -1,14 +1,40 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { logCanvasActiveState } from '../lib/performance';
 
-export const TerrainMap: React.FC = () => {
+interface TerrainMapProps {
+  isVisible?: boolean;
+  prefersReducedMotion?: boolean;
+}
+
+export const TerrainMap: React.FC<TerrainMapProps> = ({
+  isVisible = true,
+  prefersReducedMotion = false,
+}) => {
   const terrainRef = useRef<THREE.Mesh>(null);
   const pinRef = useRef<THREE.Mesh>(null);
 
+  useEffect(() => {
+    logCanvasActiveState('TerrainMap', isVisible);
+  }, [isVisible]);
+
   // Slowly rotate the terrain map
   useFrame((state) => {
+    if (!isVisible) return;
     const time = state.clock.getElapsedTime();
+
+    if (prefersReducedMotion) {
+      if (terrainRef.current) {
+        terrainRef.current.rotation.z = 0;
+      }
+      if (pinRef.current) {
+        pinRef.current.position.z = 0.5;
+        pinRef.current.rotation.y = 0;
+      }
+      return;
+    }
+
     if (terrainRef.current) {
       terrainRef.current.rotation.z = time * 0.15;
     }

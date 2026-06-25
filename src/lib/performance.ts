@@ -108,3 +108,56 @@ export const trackLazyLoad = <T>(pageName: string, importFn: () => Promise<T>): 
     });
   };
 };
+
+const canvasStates = new Map<string, boolean>();
+
+/**
+ * Logs changes to a WebGL Canvas active rendering state.
+ */
+export const logCanvasActiveState = (name: string, active: boolean) => {
+  if (!isDev) return;
+  const prevState = canvasStates.get(name);
+  if (prevState === active) return;
+  
+  canvasStates.set(name, active);
+  console.log(
+    `%c[WebGL Runtime] Canvas [${name.toUpperCase()}]: %c${active ? 'RENDERIZANDO (Activo)' : 'PAUSADO (Fuera de Foco)'}`,
+    'color: #8e928a; font-weight: bold;',
+    active ? 'color: #3de273; font-weight: bold;' : 'color: #d42a2a; font-weight: bold;'
+  );
+};
+
+const pagePolicies = new Map<string, string>();
+
+/**
+ * Logs the applied render policy for GlobalCanvas on page change.
+ */
+export const logRouteRenderPolicy = (page: string, policy: string) => {
+  if (!isDev) return;
+  const prevPolicy = pagePolicies.get(page);
+  if (prevPolicy === policy) return;
+  
+  pagePolicies.set(page, policy);
+  console.log(
+    `%c[WebGL Runtime] GlobalCanvas página [${page.toUpperCase()}]: Política de Renderizado %c[${policy.toUpperCase()}]`,
+    'color: #8e928a; font-weight: bold;',
+    'color: #eec058; font-weight: bold; text-decoration: underline;'
+  );
+};
+
+let lastVisibility: boolean | null = null;
+
+/**
+ * Logs document visibility changes.
+ */
+export const logVisibilityChange = (visible: boolean) => {
+  if (!isDev) return;
+  if (lastVisibility === visible) return;
+  
+  lastVisibility = visible;
+  console.log(
+    `%c[WebGL Runtime] Visibilidad de Pestaña: %c${visible ? 'VISIBLE (Reanudar Loops)' : 'OCULTA (Pausar Loops)'}`,
+    'color: #8e928a; font-weight: bold;',
+    visible ? 'color: #3de273; font-weight: bold;' : 'color: #d42a2a; font-weight: bold;'
+  );
+};

@@ -6,6 +6,9 @@ import gsap from 'gsap';
 
 import { images } from '../../config/images';
 import { SmartImage } from '../../components/ui/SmartImage';
+import { usePageVisibility } from '../../hooks/usePageVisibility';
+import { useElementVisibility } from '../../hooks/useElementVisibility';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface AttractionItem {
   id: 'gotcha' | 'cuatrimotos' | 'tirolesas' | 'caballo';
@@ -18,6 +21,12 @@ interface AttractionItem {
 export const Atracciones: React.FC = () => {
   const [activeAttraction, setActiveAttraction] = useState<AttractionItem['id']>('gotcha');
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+
+  const isPageVisible = usePageVisibility();
+  const isElementVisible = useElementVisibility(canvasContainerRef);
+  const prefersReducedMotion = useReducedMotion();
+  const isCanvasActive = isPageVisible && isElementVisible;
 
   const attractions: AttractionItem[] = [
     {
@@ -132,7 +141,7 @@ export const Atracciones: React.FC = () => {
             </h3>
             
             {/* Main Interactive 3D Canvas */}
-            <div className="w-full h-64 relative z-10 cursor-grab active:cursor-grabbing">
+            <div ref={canvasContainerRef} className="w-full h-64 relative z-10 cursor-grab active:cursor-grabbing">
               <Canvas
                 camera={{ position: [0, 0, 4.2], fov: 45 }}
                 gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -141,7 +150,11 @@ export const Atracciones: React.FC = () => {
                 <ambientLight intensity={0.4} />
                 <directionalLight position={[5, 10, 3]} intensity={1.0} color="#ffdf9f" />
                 <pointLight position={[-5, -5, -2]} intensity={0.5} color="#3de273" />
-                <AttractionModel type={activeAttraction} />
+                <AttractionModel 
+                  type={activeAttraction} 
+                  isVisible={isCanvasActive} 
+                  prefersReducedMotion={prefersReducedMotion} 
+                />
               </Canvas>
             </div>
 

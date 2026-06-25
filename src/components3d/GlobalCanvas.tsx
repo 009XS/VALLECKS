@@ -1,10 +1,19 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ForestScene } from './ForestScene';
+import { usePageVisibility } from '../hooks/usePageVisibility';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+import { logCanvasActiveState, logRouteRenderPolicy, logVisibilityChange } from '../lib/performance';
+import { PERFORMANCE } from '../config/performance';
+
+interface DustSceneProps {
+  isVisible: boolean;
+  prefersReducedMotion: boolean;
+}
 
 // A simple scene with floating golden dust particles for other pages
-const DustScene: React.FC = () => {
+const DustScene: React.FC<DustSceneProps> = ({ isVisible, prefersReducedMotion }) => {
   const pointsRef = useRef<THREE.Points>(null);
   const count = 120;
 
@@ -20,7 +29,16 @@ const DustScene: React.FC = () => {
     return [pos, sp];
   }, []);
 
+  useEffect(() => {
+    logCanvasActiveState('GlobalCanvas-DustScene', isVisible);
+  }, [isVisible]);
+
   useFrame((state) => {
+    if (!isVisible) return;
+    
+    // Stop floating animation if reduced motion is preferred
+    if (prefersReducedMotion) return;
+
     const time = state.clock.getElapsedTime();
     if (pointsRef.current) {
       const posAttr = pointsRef.current.geometry.attributes.position;
@@ -67,15 +85,41 @@ interface GlobalCanvasProps {
 }
 
 export const GlobalCanvas: React.FC<GlobalCanvasProps> = ({ currentPage }) => {
+  const isTabVisible = usePageVisibility();
+  const prefersReducedMotion = useReducedMotion();
+
+  // Log visibility updates in development
+  useEffect(() => {
+    logVisibilityChange(isTabVisible);
+  }, [isTabVisible]);
+
+  // Log dynamic render policy on page transition
+  useEffect(() => {
+    const policy = currentPage === 'home' 
+      ? 'full-3d-scene (Forest)' 
+      : 'reduced-3d-scene (Dust Particles)';
+    logRouteRenderPolicy(currentPage, policy);
+  }, [currentPage]);
+
   return (
     <div className="webgl-canvas-container">
       <Canvas
         camera={{ position: [0, 2, 8], fov: 60 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        dpr={[1, 2]} // Limit device pixel ratio to 2 for high performance on Retina/4K screens
+        dpr={[1, PERFORMANCE.MAX_DPR]} // Limit device pixel ratio using constants
         shadows
       >
-        {currentPage === 'home' ? <ForestScene /> : <DustScene />}
+        {currentPage === 'home' ? (
+          <ForestScene 
+            isVisible={isTabVisible} 
+            prefersReducedMotion={prefersReducedMotion} 
+          />
+        ) : (
+          <DustScene 
+            isVisible={isTabVisible} 
+            prefersReducedMotion={prefersReducedMotion} 
+          />
+        )}
       </Canvas>
     </div>
   );

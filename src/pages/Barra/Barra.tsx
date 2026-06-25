@@ -4,6 +4,9 @@ import { FluidGlass } from '../../components3d/FluidGlass';
 import gsap from 'gsap';
 
 import { images } from '../../config/images';
+import { usePageVisibility } from '../../hooks/usePageVisibility';
+import { useElementVisibility } from '../../hooks/useElementVisibility';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface CocktailItem {
   id: 'pitufos' | 'mojito' | 'cantaritos';
@@ -16,6 +19,12 @@ interface CocktailItem {
 export const Barra: React.FC = () => {
   const [activeCocktail, setActiveCocktail] = useState<CocktailItem['id']>('pitufos');
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+
+  const isPageVisible = usePageVisibility();
+  const isElementVisible = useElementVisibility(canvasContainerRef);
+  const prefersReducedMotion = useReducedMotion();
+  const isCanvasActive = isPageVisible && isElementVisible;
 
   const cocktails: CocktailItem[] = [
     {
@@ -111,7 +120,7 @@ export const Barra: React.FC = () => {
                   SIMULADOR 3D DE FLUIDOS
                 </div>
 
-                <div className="w-full h-64">
+                <div ref={canvasContainerRef} className="w-full h-64">
                   <Canvas
                     camera={{ position: [0, 0.2, 2.5], fov: 45 }}
                     gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -119,7 +128,11 @@ export const Barra: React.FC = () => {
                   >
                     <ambientLight intensity={0.4} />
                     <directionalLight position={[5, 10, 5]} intensity={1.2} color="#ffffff" />
-                    <FluidGlass cocktailType={activeCocktail} />
+                    <FluidGlass 
+                      cocktailType={activeCocktail} 
+                      isVisible={isCanvasActive} 
+                      prefersReducedMotion={prefersReducedMotion} 
+                    />
                   </Canvas>
                 </div>
 

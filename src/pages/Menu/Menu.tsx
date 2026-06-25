@@ -6,6 +6,9 @@ import gsap from 'gsap';
 
 import { images } from '../../config/images';
 import { SmartImage } from '../../components/ui/SmartImage';
+import { usePageVisibility } from '../../hooks/usePageVisibility';
+import { useElementVisibility } from '../../hooks/useElementVisibility';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 interface MenuItem {
   name: string;
@@ -22,6 +25,12 @@ interface MenuCategory {
 
 export const Menu: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+
+  const isPageVisible = usePageVisibility();
+  const isElementVisible = useElementVisibility(canvasContainerRef);
+  const prefersReducedMotion = useReducedMotion();
+  const isCanvasActive = isPageVisible && isElementVisible;
 
   const menuCategories: MenuCategory[] = [
     {
@@ -159,7 +168,7 @@ export const Menu: React.FC = () => {
                       </div>
                     ) : item.name === 'Café de Olla' ? (
                       /* Interactive 3D jar for Cafe de Olla */
-                      <div className="h-[220px] w-full bg-[#0d140e] relative flex items-center justify-center border-b border-[#d4a84322] cursor-grab active:cursor-grabbing">
+                      <div ref={canvasContainerRef} className="h-[220px] w-full bg-[#0d140e] relative flex items-center justify-center border-b border-[#d4a84322] cursor-grab active:cursor-grabbing">
                         <div className="absolute top-3 left-4 font-accent text-[9px] text-secondary font-bold tracking-widest uppercase">
                           Interactivo 3D
                         </div>
@@ -170,7 +179,10 @@ export const Menu: React.FC = () => {
                         >
                           <ambientLight intensity={0.4} />
                           <directionalLight position={[5, 10, 5]} intensity={0.8} />
-                          <SteamingDish />
+                          <SteamingDish 
+                            isVisible={isCanvasActive} 
+                            prefersReducedMotion={prefersReducedMotion} 
+                          />
                         </Canvas>
                       </div>
                     ) : null}

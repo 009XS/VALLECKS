@@ -1,21 +1,41 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { logCanvasActiveState } from '../lib/performance';
 
-export const SteamingDish: React.FC = () => {
+interface SteamingDishProps {
+  isVisible?: boolean;
+  prefersReducedMotion?: boolean;
+}
+
+export const SteamingDish: React.FC<SteamingDishProps> = ({
+  isVisible = true,
+  prefersReducedMotion = false,
+}) => {
   const potRef = useRef<THREE.Group>(null);
   const steamRef = useRef<THREE.Points>(null);
 
+  useEffect(() => {
+    logCanvasActiveState('SteamingDish', isVisible);
+  }, [isVisible]);
+
   // Slow spin and float
   useFrame((state) => {
+    if (!isVisible) return;
     const time = state.clock.getElapsedTime();
+    
     if (potRef.current) {
-      potRef.current.rotation.y = time * 0.4;
-      potRef.current.position.y = Math.sin(time * 1.5) * 0.08 - 0.2;
+      if (prefersReducedMotion) {
+        potRef.current.rotation.y = 0;
+        potRef.current.position.y = -0.2;
+      } else {
+        potRef.current.rotation.y = time * 0.4;
+        potRef.current.position.y = Math.sin(time * 1.5) * 0.08 - 0.2;
+      }
     }
 
     // Animate vapor particles
-    if (steamRef.current) {
+    if (!prefersReducedMotion && steamRef.current) {
       const posAttr = steamRef.current.geometry.attributes.position;
       const count = posAttr.count;
       for (let i = 0; i < count; i++) {
@@ -82,21 +102,23 @@ export const SteamingDish: React.FC = () => {
       </group>
 
       {/* Steam / Vapor Particles rising */}
-      <points ref={steamRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[positions, 3]}
+      {!prefersReducedMotion && (
+        <points ref={steamRef}>
+          <bufferGeometry>
+            <bufferAttribute
+              attach="attributes-position"
+              args={[positions, 3]}
+            />
+          </bufferGeometry>
+          <pointsMaterial
+            color="#ffdf9f"
+            size={0.12}
+            transparent
+            opacity={0.35}
+            blending={THREE.AdditiveBlending}
           />
-        </bufferGeometry>
-        <pointsMaterial
-          color="#ffdf9f"
-          size={0.12}
-          transparent
-          opacity={0.35}
-          blending={THREE.AdditiveBlending}
-        />
-      </points>
+        </points>
+      )}
     </group>
   );
 };

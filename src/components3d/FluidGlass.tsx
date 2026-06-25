@@ -1,12 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { logCanvasActiveState } from '../lib/performance';
 
 interface FluidGlassProps {
   cocktailType: 'pitufos' | 'mojito' | 'cantaritos';
+  isVisible?: boolean;
+  prefersReducedMotion?: boolean;
 }
 
-export const FluidGlass: React.FC<FluidGlassProps> = ({ cocktailType }) => {
+export const FluidGlass: React.FC<FluidGlassProps> = ({
+  cocktailType,
+  isVisible = true,
+  prefersReducedMotion = false,
+}) => {
   const glassRef = useRef<THREE.Group>(null);
   const liquidRef = useRef<THREE.Mesh>(null);
   const iceGroupRef = useRef<THREE.Group>(null);
@@ -33,33 +40,51 @@ export const FluidGlass: React.FC<FluidGlassProps> = ({ cocktailType }) => {
 
   const colors = cocktailColors[cocktailType];
 
+  useEffect(() => {
+    logCanvasActiveState('FluidGlass', isVisible);
+  }, [isVisible]);
+
   useFrame((state) => {
+    if (!isVisible) return;
     const time = state.clock.getElapsedTime();
 
     // 1. Tilt the glass based on mouse coordinates (simulating inertia)
     if (glassRef.current) {
-      const targetRotationX = mouse.y * 0.4;
-      const targetRotationZ = -mouse.x * 0.4;
-      glassRef.current.rotation.x = THREE.MathUtils.lerp(glassRef.current.rotation.x, targetRotationX, 0.05);
-      glassRef.current.rotation.z = THREE.MathUtils.lerp(glassRef.current.rotation.z, targetRotationZ, 0.05);
-      // Small vertical breathing bobbing
-      glassRef.current.position.y = Math.sin(time * 2.0) * 0.05;
+      if (prefersReducedMotion) {
+        glassRef.current.rotation.x = 0;
+        glassRef.current.rotation.z = 0;
+        glassRef.current.position.y = 0;
+      } else {
+        const targetRotationX = mouse.y * 0.4;
+        const targetRotationZ = -mouse.x * 0.4;
+        glassRef.current.rotation.x = THREE.MathUtils.lerp(glassRef.current.rotation.x, targetRotationX, 0.05);
+        glassRef.current.rotation.z = THREE.MathUtils.lerp(glassRef.current.rotation.z, targetRotationZ, 0.05);
+        glassRef.current.position.y = Math.sin(time * 2.0) * 0.05;
+      }
     }
 
     // 2. Animate the liquid surface (wobble/slosh effect)
     if (liquidRef.current) {
-      // Counter-tilt the liquid surface slightly to keep it horizontal-ish
-      // Plus a sine-wave slosh factor
-      const speed = 4.0;
-      const wave = Math.sin(time * speed) * 0.06;
-      liquidRef.current.rotation.z = -glassRef.current!.rotation.z + wave;
-      liquidRef.current.rotation.x = -glassRef.current!.rotation.x + Math.cos(time * speed) * 0.04;
+      if (prefersReducedMotion) {
+        liquidRef.current.rotation.z = 0;
+        liquidRef.current.rotation.x = 0;
+      } else {
+        const speed = 4.0;
+        const wave = Math.sin(time * speed) * 0.06;
+        liquidRef.current.rotation.z = -glassRef.current!.rotation.z + wave;
+        liquidRef.current.rotation.x = -glassRef.current!.rotation.x + Math.cos(time * speed) * 0.04;
+      }
     }
 
     // 3. Rotate ice cubes inside
     if (iceGroupRef.current) {
-      iceGroupRef.current.rotation.y = time * 0.15;
-      iceGroupRef.current.position.y = Math.sin(time * 3.0) * 0.02;
+      if (prefersReducedMotion) {
+        iceGroupRef.current.rotation.y = 0;
+        iceGroupRef.current.position.y = 0;
+      } else {
+        iceGroupRef.current.rotation.y = time * 0.15;
+        iceGroupRef.current.position.y = Math.sin(time * 3.0) * 0.02;
+      }
     }
   });
 
