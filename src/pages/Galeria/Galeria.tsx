@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, ZoomIn } from 'lucide-react';
 import gsap from 'gsap';
 import { images as imageAssets } from '../../config/images';
+import { SmartImage } from '../../components/ui/SmartImage';
 
 interface GalleryItem {
   id: number;
@@ -66,7 +67,7 @@ export const Galeria: React.FC = () => {
             onClick={() => setSelectedImage(img.src)}
             className="gallery-item overflow-hidden rounded-lg bg-[#111810] border border-transparent hover:border-secondary transition-all duration-500 shadow-lg relative group cursor-pointer aspect-[4/3]"
           >
-            <img
+            <SmartImage
               src={img.src}
               alt={img.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"

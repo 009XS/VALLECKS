@@ -5,6 +5,7 @@ import { Flame, Coffee, Heart } from 'lucide-react';
 import gsap from 'gsap';
 
 import { images } from '../../config/images';
+import { SmartImage } from '../../components/ui/SmartImage';
 
 interface MenuItem {
   name: string;
@@ -150,7 +151,7 @@ export const Menu: React.FC = () => {
                     {/* Visual Section: Image OR R3F 3D jar for Hot Drinks */}
                     {item.imgSrc ? (
                       <div className="aspect-[4/3] w-full overflow-hidden bg-surface-container-lowest">
-                        <img
+                        <SmartImage
                           src={item.imgSrc}
                           alt={item.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"

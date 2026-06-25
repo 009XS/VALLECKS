@@ -7,16 +7,16 @@ import { GlobalCanvas } from './components3d/GlobalCanvas';
 // Eagerly loaded critical page
 import { Home } from './pages/Home/Home';
 
-// Lazy loaded non-critical subpages for bundle size reduction
-const Atracciones = lazy(() => import('./pages/Atracciones/Atracciones').then(m => ({ default: m.Atracciones })));
-const Menu = lazy(() => import('./pages/Menu/Menu').then(m => ({ default: m.Menu })));
-const Barra = lazy(() => import('./pages/Barra/Barra').then(m => ({ default: m.Barra })));
-const Galeria = lazy(() => import('./pages/Galeria/Galeria').then(m => ({ default: m.Galeria })));
-const Ubicacion = lazy(() => import('./pages/Ubicacion/Ubicacion').then(m => ({ default: m.Ubicacion })));
+// Lazy loaded non-critical subpages for bundle size reduction with telemetry
+const Atracciones = lazy(trackLazyLoad('atracciones', () => import('./pages/Atracciones/Atracciones').then(m => ({ default: m.Atracciones }))));
+const Menu = lazy(trackLazyLoad('menu', () => import('./pages/Menu/Menu').then(m => ({ default: m.Menu }))));
+const Barra = lazy(trackLazyLoad('barra', () => import('./pages/Barra/Barra').then(m => ({ default: m.Barra }))));
+const Galeria = lazy(trackLazyLoad('galeria', () => import('./pages/Galeria/Galeria').then(m => ({ default: m.Galeria }))));
+const Ubicacion = lazy(trackLazyLoad('ubicacion', () => import('./pages/Ubicacion/Ubicacion').then(m => ({ default: m.Ubicacion }))));
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { startRouteTransition, endRouteTransition } from './lib/performance';
+import { startRouteTransition, endRouteTransition, trackLazyLoad, logBootTime } from './lib/performance';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,6 +35,11 @@ const PageFallback = () => (
 function App() {
   const [currentPage, setCurrentPage] = useState<string>('home');
   const pageContainerRef = useRef<HTMLDivElement>(null);
+
+  // Log the initial React boot time on first mount
+  useEffect(() => {
+    logBootTime();
+  }, []);
 
   // Smooth virtual page transition on page change with performance telemetry
   useEffect(() => {

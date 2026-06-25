@@ -5,6 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import gsap from 'gsap';
 
 import { images } from '../../config/images';
+import { SmartImage } from '../../components/ui/SmartImage';
 
 interface AttractionItem {
   id: 'gotcha' | 'cuatrimotos' | 'tirolesas' | 'caballo';
@@ -99,7 +100,7 @@ export const Atracciones: React.FC = () => {
               onMouseEnter={() => setActiveAttraction(attraction.id)}
             >
               <div className="w-full md:w-2/5 aspect-[4/3] rounded overflow-hidden bg-surface-container-lowest shrink-0">
-                <img
+                <SmartImage
                   src={attraction.imgSrc}
                   alt={attraction.title}
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
