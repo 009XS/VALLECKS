@@ -79,48 +79,48 @@ export const Barra: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <img
             alt="Cinematic dark bar"
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-20 scale-105"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuB41nlxbY2Vny9M0UnqYrDhWLGXQBIU64CUDQVx-JqHSIO01Q5YHVOdrFEYUmFuCLsyliR1BGb0JzXwXAAIltnchO1PGZHOKtj7IoSP4zjN6uX43FReeKl5rTgdKHp-pAOQcp-R1zf3u93t-4uIyQdnL5wu8M8MKG8gQ4b-6aBqltf84AVynNNq0JC_1gd_gDjjABz9P8nfA_tSmzg-vhsh_CwcMhG1GOSZ2ZcXuG_9FesRIkU6QyZSMlOpe7BhXm5JiLJpTq3hqDA"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/50 via-[#060906]/85 to-[#060906]"></div>
         </div>
         <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-4 barra-header">
-          <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-1">
+          <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-2">
             MIXOLOGÍA RÚSTICA DE AUTOR
           </span>
-          <h1 className="font-display text-4xl md:text-6xl text-secondary font-bold">
+          <h1 className="font-display text-5xl md:text-7xl text-on-background font-bold tracking-tight">
             La Barra
           </h1>
-          <div className="w-16 h-0.5 bg-secondary mx-auto mb-4"></div>
-          <p className="font-body text-base md:text-lg text-inverse-surface max-w-xl mx-auto italic">
+          <div className="w-20 h-[1.5px] bg-secondary mx-auto mb-4"></div>
+          <p className="font-body text-base md:text-lg text-on-surface-variant/90 max-w-xl mx-auto italic leading-relaxed">
             Coctelería de autor y bebidas refrescantes en el corazón del bosque.
           </p>
         </div>
       </header>
 
       {/* Main Cocktails Visualizer */}
-      <section className="py-20 px-gutter bg-[#080808]">
+      <section className="py-24 px-gutter bg-[#060906]">
         <div className="max-w-max-width mx-auto">
           {/* Section title */}
-          <div className="text-center mb-16">
-            <h2 className="font-display text-3xl md:text-4xl text-secondary mb-3 font-semibold">
+          <div className="text-center mb-20">
+            <h2 className="font-display text-3xl md:text-4xl text-on-background font-bold mb-4 tracking-tight">
               Coctelería de Autor
             </h2>
-            <div className="w-10 h-0.5 bg-secondary mx-auto"></div>
+            <div className="w-12 h-[1px] bg-secondary mx-auto"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left/Middle: 3D Visualizer */}
             <div className="lg:col-span-6 flex flex-col items-center">
-              <div className="w-full max-w-[440px] aspect-square bg-[#0d140e] border border-secondary/20 rounded-2xl flex flex-col items-center justify-between p-6 shadow-2xl relative cursor-grab active:cursor-grabbing">
+              <div className="w-full max-w-[460px] aspect-square bg-black/60 backdrop-blur-lg border border-secondary/20 rounded-2xl flex flex-col items-center justify-between p-8 shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative cursor-grab active:cursor-grabbing overflow-hidden">
                 {/* Background Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(238,192,88,0.08)_0%,transparent_70%)] pointer-events-none"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.06)_0%,transparent_70%)] pointer-events-none"></div>
 
-                <div className="font-accent text-[10px] font-bold text-secondary tracking-widest uppercase">
+                <div className="font-accent text-[9px] font-extrabold text-secondary tracking-widest uppercase z-10">
                   SIMULADOR 3D DE FLUIDOS
                 </div>
 
-                <div ref={canvasContainerRef} className="w-full h-64">
+                <div ref={canvasContainerRef} className="w-full h-64 relative z-10">
                   <Canvas
                     camera={{ position: [0, 0.2, 2.5], fov: 45 }}
                     gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -136,11 +136,11 @@ export const Barra: React.FC = () => {
                   </Canvas>
                 </div>
 
-                <div className="text-center">
+                <div className="text-center z-10">
                   <h4 className="font-display text-lg text-on-background font-semibold mb-1">
                     {cocktails.find((c) => c.id === activeCocktail)?.name}
                   </h4>
-                  <p className="font-body text-xs text-on-surface-variant/80">
+                  <p className="font-body text-[11px] text-on-surface-variant/70">
                     Mueve el cursor para interactuar con el oleaje físico del coctel.
                   </p>
                 </div>
@@ -154,17 +154,17 @@ export const Barra: React.FC = () => {
                   key={cocktail.id}
                   type="button"
                   onClick={() => setActiveCocktail(cocktail.id)}
-                  className={`p-6 border rounded-lg bg-[#111810] transition-all duration-300 cursor-pointer cocktail-card flex flex-col justify-between w-full text-left ${
+                  className={`p-6 border rounded-xl transition-all duration-500 cursor-pointer cocktail-card flex flex-col justify-between w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 ${
                     activeCocktail === cocktail.id
-                      ? 'border-secondary shadow-[0_0_20px_rgba(238,192,88,0.15)] bg-surface-container-high'
-                      : 'border-secondary/10 hover:border-secondary/50'
+                      ? 'border-secondary bg-black/60 shadow-[0_12px_40px_rgba(212,168,67,0.08),0_0_30px_rgba(0,0,0,0.6)] scale-[1.01]'
+                      : 'border-white/5 hover:border-secondary/35 bg-[#0a0e0a]/40 backdrop-blur-md hover:scale-[1.005]'
                   }`}
                 >
                   <div>
-                    <h3 className="font-display text-xl text-secondary font-semibold mb-2">
+                    <h3 className="font-display text-xl text-secondary font-semibold mb-3 group-hover:text-secondary-hover">
                       {cocktail.name}
                     </h3>
-                    <p className="font-body text-sm text-on-surface-variant leading-relaxed italic mb-4">
+                    <p className="font-body text-sm text-on-surface-variant/90 leading-relaxed italic mb-5">
                       {cocktail.ingredients}
                     </p>
                   </div>
@@ -172,7 +172,7 @@ export const Barra: React.FC = () => {
                     {cocktail.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-0.5 bg-surface-container text-secondary text-xs uppercase tracking-wider rounded border border-surface-container-high"
+                        className="px-2.5 py-0.5 bg-secondary/10 text-secondary text-[9px] font-extrabold uppercase tracking-wider rounded border border-secondary/20"
                       >
                         {tag}
                       </span>
@@ -186,57 +186,58 @@ export const Barra: React.FC = () => {
       </section>
 
       {/* Atmospheric Pour Graphic */}
-      <section className="relative h-64 md:h-80 w-full overflow-hidden">
+      <section className="relative h-80 md:h-[450px] w-full overflow-hidden my-24 border-y border-secondary/10">
         <img
           alt="Bartender pouring drink"
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover opacity-25 scale-105"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVrFXFsl5hu7IfZBfqimsZKL7hEmo9zfUpYMPT9JsWyrTdCCYbLsxEyvpLWLygnoO7SNTBeMwQz17e-rlJwxDK7E6T9rtlZLN30PftqxuV8RyUFDe6PaoUyeGQrCgPqrOwWU5Af4RtIAa6mWS7CTR-D5KulPk4sAb-ISaIJFHgef_7_JhOwudBARMhOcGuofnKRDUS3GuLYDfWE1w57mVmIQ68SB7bDryt-7vWHBjwK_p-HdHKDD5gARoASrB06EjgpkOFqYoecjE"
         />
-        <div className="absolute inset-0 bg-background/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background"></div>
+        <div className="absolute inset-0 bg-background/45"></div>
       </section>
 
       {/* Detailed Lists */}
-      <section className="py-20 px-gutter bg-background details-section">
+      <section className="py-24 px-gutter bg-[#060906] details-section">
         <div className="max-w-max-width mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             {/* Beers */}
             <div>
-              <h2 className="font-display text-2xl md:text-3xl text-secondary mb-8 border-b border-secondary/20 pb-2">
+              <h2 className="font-display text-2xl md:text-3xl text-secondary mb-8 border-b border-white/10 pb-4 tracking-wide font-semibold">
                 Cervezas Artesanales
               </h2>
               <ul className="space-y-4">
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Stout Oscura</span>
-                  <span className="font-accent text-xs text-secondary/70">Local</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Stout Oscura</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Local</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Pale Ale</span>
-                  <span className="font-accent text-xs text-secondary/70">Refrescante</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Pale Ale</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Refrescante</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Lager Especial</span>
-                  <span className="font-accent text-xs text-secondary/70">Clásica</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Lager Especial</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Clásica</span>
                 </li>
               </ul>
             </div>
 
             {/* Non-Alcoholic / Hot Drinks */}
             <div>
-              <h2 className="font-display text-2xl md:text-3xl text-secondary mb-8 border-b border-secondary/20 pb-2">
+              <h2 className="font-display text-2xl md:text-3xl text-secondary mb-8 border-b border-white/10 pb-4 tracking-wide font-semibold">
                 Sin Alcohol &amp; Tradicionales
               </h2>
               <ul className="space-y-4">
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Café de Olla</span>
-                  <span className="font-accent text-xs text-secondary/70">Leña &amp; Canela</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Café de Olla</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Leña &amp; Canela</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Chocolate Caliente</span>
-                  <span className="font-accent text-xs text-secondary/70">Artesanal</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Chocolate Caliente</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Artesanal</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-surface-variant pb-2">
-                  <span className="font-body text-base text-inverse-surface">Naranjada Mineral</span>
-                  <span className="font-accent text-xs text-secondary/70">Fresco</span>
+                <li className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="font-body text-base text-on-surface">Naranjada Mineral</span>
+                  <span className="font-accent text-[9px] font-extrabold text-secondary/70 uppercase tracking-widest border border-secondary/20 bg-secondary/5 px-2 py-0.5 rounded">Fresco</span>
                 </li>
               </ul>
             </div>
@@ -245,8 +246,8 @@ export const Barra: React.FC = () => {
       </section>
 
       {/* Warning Strip */}
-      <div className="bg-[#1a2e1b] py-4 text-center px-gutter">
-        <p className="font-accent text-[10px] text-inverse-surface/80 uppercase tracking-widest">
+      <div className="bg-black/85 py-5 border-t border-white/5 text-center px-gutter">
+        <p className="font-accent text-[9px] text-on-surface-variant/60 uppercase tracking-widest">
           EVITE EL EXCESO. BEBA CON RESPONSABILIDAD.
         </p>
       </div>

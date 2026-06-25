@@ -82,48 +82,49 @@ export const Atracciones: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-24 min-h-screen">
+    <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-32 min-h-screen">
       {/* Header */}
-      <div className="text-center mb-16 attraction-header">
-        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-2">
+      <div className="text-center mb-20 attraction-header">
+        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-3">
           EXPLORACIÓN Y AVENTURA
         </span>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-on-background font-bold mb-4">
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-on-background font-bold mb-6 tracking-tight">
           Aventura en la Montaña
         </h1>
-        <div className="w-16 h-0.5 bg-secondary mx-auto"></div>
+        <div className="w-20 h-[1.5px] bg-secondary mx-auto"></div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         {/* Left Side: Cards */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-6">
           {attractions.map((attraction) => (
             <button
               key={attraction.id}
               type="button"
-              className={`p-6 border rounded-lg bg-surface-container/70 transition-all duration-300 cursor-pointer attraction-card flex flex-col md:flex-row gap-6 items-center w-full text-left ${
+              className={`p-6 border rounded-xl transition-all duration-500 cursor-pointer attraction-card flex flex-col md:flex-row gap-6 items-center w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 ${
                 activeAttraction === attraction.id
-                  ? 'border-secondary shadow-[0_0_20px_rgba(238,192,88,0.15)] bg-surface-container-high'
-                  : 'border-secondary/10 hover:border-secondary/50'
+                  ? 'border-secondary bg-black/60 shadow-[0_12px_40px_rgba(212,168,67,0.08),0_0_30px_rgba(0,0,0,0.6)] scale-[1.01]'
+                  : 'border-white/5 hover:border-secondary/35 bg-[#0a0e0a]/40 backdrop-blur-md hover:scale-[1.005]'
               }`}
               onClick={() => setActiveAttraction(attraction.id)}
               onMouseEnter={() => setActiveAttraction(attraction.id)}
             >
-              <div className="w-full md:w-2/5 aspect-[4/3] rounded overflow-hidden bg-surface-container-lowest shrink-0">
+              <div className="w-full md:w-2/5 aspect-[4/3] rounded-lg overflow-hidden bg-black/40 border border-white/5 shrink-0 relative">
                 <SmartImage
                   src={attraction.imgSrc}
                   alt={attraction.title}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
               </div>
               <div className="flex-grow">
-                <span className="font-accent text-[10px] font-bold text-secondary uppercase tracking-widest block mb-1">
+                <span className="font-accent text-[9px] font-extrabold text-secondary uppercase tracking-widest block mb-2">
                   {attraction.tag}
                 </span>
-                <h3 className="font-display text-xl text-on-background font-semibold mb-2">
+                <h3 className="font-display text-xl text-on-background font-semibold mb-3">
                   {attraction.title}
                 </h3>
-                <p className="font-body text-sm text-on-surface-variant leading-relaxed">
+                <p className="font-body text-sm text-on-surface-variant/90 leading-relaxed">
                   {attraction.description}
                 </p>
               </div>
@@ -133,11 +134,11 @@ export const Atracciones: React.FC = () => {
 
         {/* Right Side: Sticky 3D Model Viewer */}
         <div className="lg:col-span-5 lg:sticky lg:top-28 attraction-viewer-container">
-          <div className="border border-secondary/20 rounded-xl bg-[#0d140e]/95 p-6 flex flex-col items-center shadow-2xl relative overflow-hidden h-[480px]">
+          <div className="border border-secondary/20 rounded-2xl bg-black/60 backdrop-blur-lg p-8 flex flex-col items-center shadow-[0_24px_60px_rgba(0,0,0,0.8)] relative overflow-hidden h-[500px]">
             {/* Ambient Background Glow */}
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(238,192,88,0.06)_0%,transparent_70%)] pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.06)_0%,transparent_70%)] pointer-events-none"></div>
 
-            <h3 className="font-accent text-xs font-bold text-secondary uppercase tracking-widest mb-2 z-10">
+            <h3 className="font-accent text-[10px] font-bold text-secondary uppercase tracking-widest mb-4 z-10">
               EXPLORADOR 3D INTERACTIVO
             </h3>
             
@@ -160,18 +161,18 @@ export const Atracciones: React.FC = () => {
             </div>
 
             {/* Description Info */}
-            <div className="text-center mt-4 z-10 flex-grow flex flex-col justify-end">
+            <div className="text-center mt-4 z-10 flex-grow flex flex-col justify-end w-full">
               <h4 className="font-display text-lg text-on-background font-semibold mb-1">
                 {attractions.find((a) => a.id === activeAttraction)?.title.split(':')[0]}
               </h4>
-              <p className="font-body text-xs text-on-surface-variant/90 max-w-sm mb-4">
+              <p className="font-body text-[11px] text-on-surface-variant/70 max-w-sm mb-6 mx-auto">
                 Arrastra para rotar e interactuar con el modelo 3D representativo.
               </p>
               <a
                 href="https://wa.me/525538773469"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-whatsapp hover:bg-[#20bd5a] text-white font-accent text-xs font-bold px-6 py-3 rounded-lg transition-colors w-full tracking-wider"
+                className="btn-premium inline-flex items-center justify-center bg-secondary text-on-secondary font-accent text-xs font-bold px-6 py-4 rounded-xl transition-all duration-300 w-full tracking-widest hover:scale-[1.02]"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 RESERVAR EXPERIENCIA
@@ -182,15 +183,16 @@ export const Atracciones: React.FC = () => {
       </div>
 
       {/* Corporate Retiro Strip */}
-      <section className="bg-surface-container-highest/80 border border-secondary/10 rounded-xl p-8 md:p-12 text-center mt-20 max-w-4xl mx-auto">
-        <h3 className="font-display text-2xl md:text-3xl text-on-background font-bold mb-4">
+      <section className="glass-card border border-secondary/20 rounded-2xl p-10 md:p-16 text-center mt-24 max-w-4xl mx-auto relative overflow-hidden bg-black/45 shadow-2xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_70%)] pointer-events-none"></div>
+        <h3 className="font-display text-2xl md:text-3xl text-on-background font-bold mb-4 z-10 relative">
           ¿Vienes en grupo o retiro corporativo?
         </h3>
-        <p className="font-body text-base text-on-surface-variant/90 mb-8 max-w-2xl mx-auto">
+        <p className="font-body text-base text-on-surface-variant/90 mb-8 max-w-2xl mx-auto z-10 relative leading-relaxed">
           Organizamos experiencias personalizadas para retiros corporativos, integraciones de equipos, celebraciones familiares y grupos grandes. Disfruta de un día de aventura exclusivo con atención dedicada.
         </p>
         <a
-          className="inline-flex items-center justify-center px-8 py-4 bg-whatsapp text-white font-accent text-xs font-bold rounded-lg hover:bg-[#20bd5a] transition-all tracking-widest shadow-lg shadow-whatsapp/25"
+          className="btn-premium inline-flex items-center justify-center px-8 py-4 bg-secondary text-on-secondary font-accent text-xs font-bold rounded-xl hover:scale-[1.02] transition-all tracking-widest shadow-xl shadow-secondary/10 z-10 relative"
           href="https://wa.me/525538773469"
           target="_blank"
           rel="noopener noreferrer"

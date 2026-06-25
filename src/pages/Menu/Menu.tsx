@@ -120,33 +120,33 @@ export const Menu: React.FC = () => {
   return (
     <div ref={containerRef} className="w-full min-h-screen">
       {/* Hero Section */}
-      <header className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
+      <header className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <img
             alt="Menú background"
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-35 scale-105"
             src={images.comida}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/60 to-background"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/50 via-[#060906]/85 to-[#060906]"></div>
         </div>
         <div className="relative z-10 text-center px-gutter max-w-4xl mx-auto flex flex-col items-center menu-header">
-          <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-2">
+          <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-3">
             GASTRONOMÍA DE HERENCIA
           </span>
-          <h1 className="font-display text-4xl md:text-6xl text-on-background font-bold mb-4 drop-shadow-md">
+          <h1 className="font-display text-5xl md:text-7xl text-on-background font-bold mb-6 tracking-tight drop-shadow-2xl">
             Sabores de la Montaña
           </h1>
-          <div className="w-20 h-0.5 bg-secondary mx-auto"></div>
+          <div className="w-20 h-[1.5px] bg-secondary mx-auto"></div>
         </div>
       </header>
 
       {/* Main Menu Grid */}
-      <main className="max-w-max-width mx-auto px-gutter py-20">
+      <main className="max-w-max-width mx-auto px-gutter py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8">
           {menuCategories.map((category, catIdx) => (
             <section key={catIdx} className="menu-category flex flex-col h-full">
               {/* Category Header */}
-              <h2 className="font-display text-2xl text-secondary mb-8 border-b border-secondary/20 pb-4 flex items-center gap-3 font-semibold">
+              <h2 className="font-display text-2xl text-secondary mb-10 border-b border-white/10 pb-4 flex items-center gap-3 font-semibold tracking-wide">
                 {category.icon}
                 {category.title}
               </h2>
@@ -155,21 +155,23 @@ export const Menu: React.FC = () => {
                 {category.items.map((item, itemIdx) => (
                   <article
                     key={itemIdx}
-                    className="bg-[#111810] border border-[#d4a84322] hover:border-secondary/50 rounded-lg overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_4px_25px_rgba(238,192,88,0.08)] flex flex-col"
+                    className="bg-[#0a0e0a]/40 backdrop-blur-md border border-white/5 hover:border-secondary/35 rounded-2xl overflow-hidden group transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6),0_0_20px_rgba(212,168,67,0.05)] flex flex-col"
                   >
                     {/* Visual Section: Image OR R3F 3D jar for Hot Drinks */}
                     {item.imgSrc ? (
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-surface-container-lowest">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-black/40 relative border-b border-white/5">
                         <SmartImage
                           src={item.imgSrc}
                           alt={item.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
                       </div>
                     ) : item.name === 'Café de Olla' ? (
                       /* Interactive 3D jar for Cafe de Olla */
-                      <div ref={canvasContainerRef} className="h-[220px] w-full bg-[#0d140e] relative flex items-center justify-center border-b border-[#d4a84322] cursor-grab active:cursor-grabbing">
-                        <div className="absolute top-3 left-4 font-accent text-[9px] text-secondary font-bold tracking-widest uppercase">
+                      <div ref={canvasContainerRef} className="h-[240px] w-full bg-black/30 relative flex items-center justify-center border-b border-white/5 cursor-grab active:cursor-grabbing overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_70%)] pointer-events-none"></div>
+                        <div className="absolute top-4 left-4 font-accent text-[9px] text-secondary font-bold tracking-widest uppercase z-10">
                           Interactivo 3D
                         </div>
                         <Canvas
@@ -193,14 +195,14 @@ export const Menu: React.FC = () => {
                         <h3 className="font-display text-xl text-on-surface font-semibold group-hover:text-secondary transition-colors duration-300">
                           {item.name}
                         </h3>
-                        <div className="w-full border-t border-dashed border-outline-variant my-3"></div>
+                        <div className="w-full border-t border-dashed border-white/10 my-4"></div>
                         <p className="font-body text-sm text-on-surface-variant/90 leading-relaxed italic">
                           {item.description}
                         </p>
                       </div>
                       {item.tag && (
-                        <div className="mt-4 flex">
-                          <span className="px-2 py-0.5 bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-wider rounded border border-secondary/25">
+                        <div className="mt-6 flex">
+                          <span className="px-2 py-0.5 bg-secondary/10 text-secondary text-[9px] font-extrabold uppercase tracking-wider rounded border border-secondary/20">
                             {item.tag}
                           </span>
                         </div>
@@ -215,13 +217,14 @@ export const Menu: React.FC = () => {
       </main>
 
       {/* Atmospheric Cooking Graphic */}
-      <section className="w-full h-64 md:h-96 relative overflow-hidden my-12">
+      <section className="w-full h-80 md:h-[450px] relative overflow-hidden my-24 border-y border-secondary/10">
         <img
-          className="w-full h-full object-cover object-center opacity-60"
+          className="w-full h-full object-cover object-center opacity-40 scale-105"
           alt="Masa shaping"
           src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxhYYZIAe1rTjj8xLmIwH_8W5l29SfR7exXa4h6pNDZuGtN8h4OXshefdl9DUFr0reJA_SfX_acOV435QkJsxK0anL4BAv8GxtjXL4ULr_SV3dVvh3VIaufd6VtE6Z5jLMcAlm-Y9uwQ--E8fldQTFDYuDle9iW4qbUU-tUiQMACvrwgrLjJnqZ4_TE3KgotlA4AktTUFWjZWcoQiOdnRioVURTRatb9jTpPYD_NcMHe1s80bCbZXgiECjxIF4qXUwvStAHFmfXjY"
         />
-        <div className="absolute inset-0 bg-background/55"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background"></div>
+        <div className="absolute inset-0 bg-background/30"></div>
       </section>
     </div>
   );

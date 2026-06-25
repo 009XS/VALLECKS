@@ -63,26 +63,26 @@ export const Galeria: React.FC = () => {
   }, [selectedItem]);
 
   return (
-    <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-24 min-h-screen">
+    <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-32 min-h-screen">
       {/* Header */}
-      <div className="text-center mb-16 gallery-header">
-        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-2">
+      <div className="text-center mb-20 gallery-header">
+        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-3">
           ÁLBUM VISUAL
         </span>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-on-background font-bold mb-4">
+        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-on-background font-bold mb-6 tracking-tight">
           Galería
         </h1>
-        <div className="w-16 h-0.5 bg-secondary mx-auto"></div>
+        <div className="w-20 h-[1.5px] bg-secondary mx-auto"></div>
       </div>
 
       {/* Premium Uniform Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {galleryImages.map((img) => (
           <button
             key={img.id}
             type="button"
             onClick={() => setSelectedItem(img)}
-            className="gallery-item overflow-hidden rounded-lg bg-[#111810] border border-transparent hover:border-secondary transition-all duration-500 shadow-lg relative group cursor-pointer aspect-[4/3] w-full text-left"
+            className="gallery-item overflow-hidden rounded-2xl bg-black/40 border border-white/5 hover:border-secondary/40 transition-all duration-500 shadow-xl relative group cursor-pointer aspect-[4/3] w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50"
             aria-label={`Ver imagen ampliada de ${img.title}`}
           >
             <SmartImage
@@ -90,10 +90,10 @@ export const Galeria: React.FC = () => {
               alt={img.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4">
-              <ZoomIn className="w-8 h-8 text-secondary mb-2 transform scale-75 group-hover:scale-100 transition-transform duration-300" />
-              <span className="font-display text-lg text-on-background font-medium">
+            {/* Hover overlay with glassmorphism and slide-up title */}
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6">
+              <ZoomIn className="w-8 h-8 text-secondary mb-3 transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500" />
+              <span className="font-display text-lg text-on-background font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                 {img.title}
               </span>
             </div>
@@ -101,34 +101,34 @@ export const Galeria: React.FC = () => {
         ))}
       </div>
 
-      {/* Lightbox / Modal Modal */}
+      {/* Lightbox / Modal */}
       {selectedItem && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label={`Imagen ampliada de ${selectedItem.title}`}
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 transition-all duration-300"
+          className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-300"
           onClick={() => setSelectedItem(null)}
         >
           <button
             type="button"
             onClick={() => setSelectedItem(null)}
-            className="absolute top-6 right-6 text-secondary hover:text-white p-2 rounded-full hover:bg-white/10"
+            className="absolute top-6 right-6 text-secondary hover:text-white p-2 rounded-full hover:bg-white/5 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
             aria-label="Cerrar vista ampliada"
           >
             <X className="w-8 h-8" />
           </button>
           <div 
-            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-lg shadow-2xl relative"
+            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.9),0_0_50px_rgba(212,168,67,0.1)] relative bg-black/80"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={selectedItem.src}
               alt={selectedItem.title}
-              className="w-full h-full object-contain max-h-[80vh] rounded"
+              className="w-full h-full object-contain max-h-[75vh]"
             />
-            <div className="absolute bottom-0 inset-x-0 bg-black/75 p-4 text-center">
-              <p className="text-on-background font-display text-lg font-medium">{selectedItem.title}</p>
+            <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-md border-t border-white/5 p-5 text-center">
+              <p className="text-on-background font-display text-lg font-semibold tracking-wide">{selectedItem.title}</p>
             </div>
           </div>
         </div>
