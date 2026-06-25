@@ -193,13 +193,61 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Page transitions overlay canvas */
-.webgl-canvas-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
+/* Noise background overlay using modern CSS */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: 1;
+  background-image: radial-gradient(#d4a843 1px, transparent 0), radial-gradient(#d4a843 1px, transparent 0);
+  background-size: 12px 12px;
+  background-position: 0 0, 6px 6px;
+}
+
+/* Editorial frame for images */
+.editorial-frame {
+  position: relative;
+  padding: 12px;
+  background: rgba(10, 14, 10, 0.4);
+  border: 1px solid rgba(212, 168, 67, 0.15);
+  transition: border-color 0.5s ease;
+}
+.editorial-frame::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 168, 67, 0.04);
   pointer-events: none;
 }
+.editorial-frame:hover {
+  border-color: rgba(212, 168, 67, 0.35);
+}
+
+/* Asymmetrical Layout helpers */
+.asymmetric-offset {
+  transform: translateY(15px);
+}
+@media (min-width: 768px) {
+  .asymmetric-offset {
+    transform: translateY(35px);
+  }
+}
+
+/* Custom premium card that is NOT glass */
+.solid-editorial-card {
+  background: #080c08;
+  border: 1px solid rgba(212, 168, 67, 0.12);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.solid-editorial-card:hover {
+  border-color: rgba(212, 168, 67, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+}
+

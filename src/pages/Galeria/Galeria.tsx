@@ -33,21 +33,15 @@ export const Galeria: React.FC = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        '.gallery-header',
+        '.gallery-reveal',
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
-      );
-      gsap.fromTo(
-        '.gallery-item',
-        { opacity: 0, scale: 0.9, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' }
+        { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: 'power3.out' }
       );
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Listen for escape key press to close lightbox
   useEffect(() => {
     if (!selectedItem) return;
 
@@ -64,49 +58,54 @@ export const Galeria: React.FC = () => {
   }, [selectedItem]);
 
   return (
-    <div ref={containerRef} className="max-w-max-width mx-auto px-gutter py-32 min-h-screen">
-      {/* Header */}
-      <div className="text-center mb-20 gallery-header">
-        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-widest block mb-3">
-          ÁLBUM VISUAL
+    <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay pt-32 pb-24">
+      {/* Editorial gallery intro */}
+      <div className="max-w-xl mx-auto text-center mb-24 px-gutter gallery-reveal">
+        <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-3">
+          REGISTRO VISUAL
         </span>
-        <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-on-background font-bold mb-6 tracking-tight">
-          Galería
+        <h1 className="font-display text-4xl md:text-6xl text-on-background font-bold mb-6 tracking-tight">
+          El Álbum del Valle
         </h1>
-        <div className="w-20 h-[1.5px] bg-secondary mx-auto"></div>
+        <div className="w-20 h-[1.5px] bg-secondary mx-auto mb-6"></div>
+        <p className="font-body text-sm md:text-base text-on-surface-variant/90 leading-relaxed">
+          Un recorrido fotográfico por los rincones del rancho: lagos, senderos, atardeceres y la calidez del fogón de leña.
+        </p>
       </div>
 
-      {/* Premium Dynamic Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {galleryImages.map((img) => (
-          <button
-            key={img.id}
-            type="button"
-            onClick={() => setSelectedItem(img)}
-            className={`gallery-item overflow-hidden rounded-2xl bg-black/45 border border-white/5 hover:border-secondary/40 transition-all duration-500 shadow-xl relative group cursor-pointer w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 ${
-              img.size === 'wide'
-                ? 'md:col-span-2 aspect-[4/3] md:aspect-[8/3]'
-                : 'aspect-[4/3]'
-            }`}
-            aria-label={`Ver imagen ampliada de ${img.title}`}
-          >
-            <SmartImage
-              src={img.src}
-              alt={img.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
-            />
-            {/* Hover overlay with mature dark-gold gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6 text-center">
-              <ZoomIn className="w-8 h-8 text-secondary mb-3 transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500" />
-              <span className="font-accent text-[9px] text-secondary font-bold tracking-[0.2em] uppercase mb-1 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                VER AMPLIACIÓN
-              </span>
-              <span className="font-display text-lg text-on-background font-medium transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
-                {img.title}
-              </span>
-            </div>
-          </button>
-        ))}
+      {/* Premium Asymmetric Grid Layout */}
+      <div className="max-w-max-width mx-auto px-gutter gallery-reveal">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {galleryImages.map((img) => (
+            <button
+              key={img.id}
+              type="button"
+              onClick={() => setSelectedItem(img)}
+              className={`gallery-item overflow-hidden rounded-2xl bg-black/45 border border-white/5 hover:border-secondary/40 transition-all duration-500 shadow-xl relative group cursor-pointer w-full text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 ${
+                img.size === 'wide'
+                  ? 'md:col-span-2 aspect-[4/3] md:aspect-[8/3]'
+                  : 'aspect-[4/3]'
+              }`}
+              aria-label={`Ver imagen ampliada de ${img.title}`}
+            >
+              <SmartImage
+                src={img.src}
+                alt={img.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+              />
+              {/* Hover overlay with mature dark-gold gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-6 text-center">
+                <ZoomIn className="w-8 h-8 text-secondary mb-3 transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500" />
+                <span className="font-accent text-[9px] text-secondary font-bold tracking-[0.2em] uppercase mb-1 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                  VER AMPLIACIÓN
+                </span>
+                <span className="font-display text-lg text-on-background font-medium transform translate-y-3 group-hover:translate-y-0 transition-all duration-500">
+                  {img.title}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Lightbox / Modal */}
@@ -124,14 +123,14 @@ export const Galeria: React.FC = () => {
           <button
             type="button"
             onClick={() => setSelectedItem(null)}
-            className="absolute top-6 right-6 text-secondary hover:text-white p-2.5 rounded-full border border-secondary/20 hover:border-secondary hover:bg-white/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary"
+            className="absolute top-6 right-6 text-secondary hover:text-white p-2.5 rounded-full border border-secondary/20 hover:border-secondary hover:bg-white/5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary z-[110]"
             aria-label="Cerrar vista ampliada"
           >
             <X className="w-7 h-7" />
           </button>
           
           <div 
-            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-secondary/20 shadow-[0_32px_100px_rgba(0,0,0,0.95),0_0_60px_rgba(212,168,67,0.05)] relative bg-black/85 flex flex-col"
+            className="max-w-4xl max-h-[85vh] overflow-hidden rounded-2xl border border-secondary/20 shadow-[0_32px_100px_rgba(0,0,0,0.95),0_0_60px_rgba(212,168,67,0.05)] relative bg-black/85 flex flex-col z-[105]"
             onClick={(e) => e.stopPropagation()}
           >
             <img

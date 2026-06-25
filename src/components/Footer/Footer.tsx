@@ -13,19 +13,24 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
   };
 
   return (
-    <footer className="bg-black/85 border-t border-white/5 w-full relative z-20">
+    <footer className="bg-[#040604] border-t border-white/10 w-full relative z-20 noise-overlay">
       <div className="max-w-max-width mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 px-gutter py-24">
         {/* Brand Column */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <button
             type="button"
             onClick={() => handleNavClick('home')}
-            className="font-display text-2xl text-secondary font-bold mb-4 hover:scale-[1.02] transition-transform duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 rounded-sm"
+            className="flex flex-col text-left group mb-4 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-secondary/50 rounded-sm"
           >
-            La Marquesa
+            <span className="font-display text-xl md:text-2xl text-secondary font-bold tracking-wide leading-none transition-all duration-300 group-hover:text-[#eec058]">
+              Valle de Rancho Viejo
+            </span>
+            <span className="font-accent text-[9px] text-on-background/60 tracking-[0.25em] uppercase leading-none mt-1.5 transition-colors duration-300 group-hover:text-secondary/80">
+              La Marquesa
+            </span>
           </button>
           <p className="font-body text-sm text-on-surface-variant/80 max-w-sm leading-relaxed">
-            Valle de Rancho Viejo. Un refugio de herencia, calidez y exclusividad en las alturas. Descubre la majestuosidad de la naturaleza en un entorno de lujo rústico inigualable.
+            Valle de Rancho Viejo. Un refugio de naturaleza, gastronomía y descanso en las montañas. Descubre un entorno ideal para convivir en familia y reconectar con el bosque de La Marquesa.
           </p>
         </div>
 
@@ -111,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentPage }) => {
       </div>
       <div className="border-t border-white/5 py-6 text-center">
         <p className="font-accent text-[10px] text-on-surface-variant/40 uppercase tracking-widest">
-          © {new Date().getFullYear()} La Marquesa. Todos los derechos reservados.
+          © {new Date().getFullYear()} Valle de Rancho Viejo. Todos los derechos reservados.
         </p>
       </div>
     </footer>
