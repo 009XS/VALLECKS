@@ -104,7 +104,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
       </header>
 
       {/* B. Brand Pillars Ribbon */}
-      <section className="bg-[#040604] border-y border-white/5 py-12 px-gutter relative z-20">
+      <section className="bg-[#040604] border-y border-white/5 py-8 px-gutter relative z-20">
         <div className="max-w-max-width mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 text-center">
           <div className="flex flex-col items-center">
             <span className="font-display text-lg text-secondary italic font-semibold mb-1">Naturaleza</span>
@@ -126,7 +126,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
       </section>
 
       {/* C. Editorial Story Section */}
-      <section className="py-24 md:py-32 px-gutter relative z-20 scroll-reveal-trigger">
+      <section className="py-12 md:py-16 px-gutter relative z-20 scroll-reveal-trigger">
         <div className="max-w-max-width mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           {/* Image side with frame */}
           <div className="w-full lg:w-1/2 scroll-reveal">
@@ -170,9 +170,9 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
       </section>
 
       {/* D. Signature Experiences (Magazine Layout) */}
-      <section className="py-24 bg-[#030503] border-y border-white/5 px-gutter relative z-20">
+      <section className="py-16 bg-[#030503] border-y border-white/5 px-gutter relative z-20">
         <div className="max-w-max-width mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             <span className="font-accent text-[10px] font-bold text-secondary uppercase tracking-widest block mb-3">
               ACTIVIDADES DE MONTAÑA
             </span>
@@ -266,7 +266,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
       </section>
 
       {/* E. Warm Food & Bar Preview */}
-      <section className="py-24 px-gutter relative z-20">
+      <section className="py-16 px-gutter relative z-20">
         <div className="max-w-max-width mx-auto rounded-3xl overflow-hidden border border-secondary/25 relative shadow-2xl">
           <div className="absolute inset-0 z-0">
             <SmartImage
@@ -307,7 +307,7 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
       </section>
 
       {/* F. Final Visit CTA Section */}
-      <section className="py-24 bg-[#040604] border-t border-white/5 px-gutter relative z-20 text-center">
+      <section className="py-16 bg-[#040604] border-t border-white/5 px-gutter relative z-20 text-center">
         <div className="max-w-xl mx-auto flex flex-col items-center space-y-8">
           <MapPin className="w-10 h-10 text-secondary animate-pulse" />
           <h2 className="font-display text-3xl md:text-4xl text-on-background font-bold tracking-tight leading-tight">

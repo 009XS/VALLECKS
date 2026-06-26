@@ -18,9 +18,9 @@ export const Ubicacion: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay pt-32 pb-24">
+    <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay pt-24 pb-16">
       {/* Editorial Destination Header */}
-      <div className="max-w-xl mx-auto text-center mb-20 px-gutter ubicacion-reveal">
+      <div className="max-w-xl mx-auto text-center mb-12 px-gutter ubicacion-reveal">
         <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-3">
           GUÍA DE RUTA Y ACCESO
         </span>
@@ -34,7 +34,7 @@ export const Ubicacion: React.FC = () => {
       </div>
 
       {/* Main Destination Guide Content */}
-      <section className="max-w-max-width mx-auto px-gutter mb-24">
+      <section className="max-w-max-width mx-auto px-gutter mb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
           
           {/* Left Panel: Practical Info Blocks */}

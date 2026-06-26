@@ -103,7 +103,7 @@ export const Menu: React.FC = () => {
   return (
     <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay">
       {/* Restaurant-Style Editorial Header */}
-      <header className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
+      <header className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full select-none pointer-events-none">
           <img
             alt="Menú de comida"
@@ -127,7 +127,7 @@ export const Menu: React.FC = () => {
       </header>
 
       {/* Featured Traditional Item (Café de Olla) Spotlight */}
-      <section className="max-w-4xl mx-auto px-gutter mb-20 menu-reveal">
+      <section className="max-w-4xl mx-auto px-gutter mb-12 menu-reveal">
         <div className="rounded-3xl border border-secondary/25 bg-[#080c08] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.05)_0%,transparent_75%)] pointer-events-none"></div>
           
@@ -223,7 +223,7 @@ export const Menu: React.FC = () => {
       </main>
 
       {/* Atmospheric Cooking Graphic - Replaced Google URL with Local WebP images.fogatas */}
-      <section className="w-full h-64 md:h-[380px] relative overflow-hidden my-24 border-y border-white/5">
+      <section className="w-full h-64 md:h-[300px] relative overflow-hidden my-12 border-y border-white/5">
         <SmartImage
           className="w-full h-full object-cover object-center opacity-55 scale-102"
           alt="Cocina y fogón campestre"

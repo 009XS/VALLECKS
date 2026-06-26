@@ -17,17 +17,14 @@ export const Galeria: React.FC = () => {
 
   const galleryImages: GalleryItem[] = [
     { id: 1, title: 'Lago Místico', src: imageAssets.lagoMistico, size: 'normal' },
-    { id: 2, title: 'Valle de Dinosaurios', src: imageAssets.valleDinosaurios, size: 'wide' },
-    { id: 3, title: 'Zorbing Extremo', src: imageAssets.zorbing, size: 'normal' },
-    { id: 4, title: 'Entrada Principal', src: imageAssets.entradaPrincipal, size: 'normal' },
-    { id: 5, title: 'Rutas en Cuatrimoto', src: imageAssets.cuatrimotos, size: 'normal' },
-    { id: 6, title: 'Tirolesa Panorámica', src: imageAssets.tirolesa, size: 'normal' },
-    { id: 7, title: 'Paseos a Caballo', src: imageAssets.paseosCaballo, size: 'wide' },
-    { id: 8, title: 'Navegación en Canoa', src: imageAssets.canoas, size: 'normal' },
-    { id: 9, title: 'Gastronomía Local', src: imageAssets.comida, size: 'normal' },
-    { id: 10, title: 'Mixología de Autor', src: imageAssets.pitufos, size: 'normal' },
-    { id: 11, title: 'Gotcha en el Bosque', src: imageAssets.gotcha, size: 'wide' },
-    { id: 12, title: 'Fogatas Nocturnas', src: imageAssets.fogatas, size: 'normal' },
+    { id: 2, title: 'Entrada Principal', src: imageAssets.entradaPrincipal, size: 'normal' },
+    { id: 3, title: 'Rutas en Cuatrimoto', src: imageAssets.cuatrimotos, size: 'normal' },
+    { id: 4, title: 'Tirolesa Panorámica', src: imageAssets.tirolesa, size: 'normal' },
+    { id: 5, title: 'Paseos a Caballo', src: imageAssets.caballo, size: 'wide' },
+    { id: 6, title: 'Gastronomía Local', src: imageAssets.comida, size: 'normal' },
+    { id: 7, title: 'Gotcha en el Bosque', src: imageAssets.gotcha, size: 'wide' },
+    { id: 8, title: 'Senderos del Valle', src: imageAssets.paseosCaballo, size: 'normal' },
+    { id: 9, title: 'Fogatas Nocturnas', src: imageAssets.fogatas, size: 'normal' },
   ];
 
   useEffect(() => {
@@ -60,7 +57,7 @@ export const Galeria: React.FC = () => {
   return (
     <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay pt-32 pb-24">
       {/* Editorial gallery intro */}
-      <div className="max-w-xl mx-auto text-center mb-24 px-gutter gallery-reveal">
+      <div className="max-w-xl mx-auto text-center mb-12 px-gutter gallery-reveal">
         <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-3">
           REGISTRO VISUAL
         </span>

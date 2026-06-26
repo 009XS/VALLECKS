@@ -48,7 +48,7 @@ export const Barra: React.FC = () => {
   return (
     <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay">
       {/* Cinematic Editorial Header */}
-      <header className="relative h-[60vh] flex flex-col items-center justify-center text-center px-gutter overflow-hidden">
+      <header className="relative h-[50vh] flex flex-col items-center justify-center text-center px-gutter overflow-hidden">
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
             alt="Bar campestre de madera"
@@ -72,7 +72,7 @@ export const Barra: React.FC = () => {
       </header>
 
       {/* Responsible Copy Notice */}
-      <section className="max-w-4xl mx-auto px-gutter mb-16 barra-reveal">
+      <section className="max-w-4xl mx-auto px-gutter mb-8 barra-reveal">
         <div className="rounded-2xl border border-secondary/20 bg-secondary/5 p-6 flex flex-col sm:flex-row gap-4 items-center justify-center">
           <ShieldAlert className="w-6 h-6 text-secondary shrink-0" />
           <p className="font-body text-xs md:text-sm text-on-surface-variant/90 leading-relaxed text-center sm:text-left">
@@ -151,7 +151,7 @@ export const Barra: React.FC = () => {
       </section>
 
       {/* Detailed Beer & Drink Listings */}
-      <section className="py-24 px-gutter border-t border-white/5 barra-reveal">
+      <section className="py-16 px-gutter border-t border-white/5 barra-reveal">
         <div className="max-w-max-width mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             {/* Beers */}

@@ -61,7 +61,7 @@ export const Atracciones: React.FC = () => {
   return (
     <div ref={containerRef} className="w-full min-h-screen bg-background noise-overlay pt-32">
       {/* Top Cinematic Page Header */}
-      <div className="max-w-max-width mx-auto px-gutter text-center mb-24 reveal-item">
+      <div className="max-w-max-width mx-auto px-gutter text-center mb-12 reveal-item">
         <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-3">
           RECREACIÓN Y CONVIVENCIA
         </span>
@@ -75,7 +75,7 @@ export const Atracciones: React.FC = () => {
       </div>
 
       {/* Large Asymmetric Editorial Showcase */}
-      <div className="max-w-max-width mx-auto px-gutter space-y-32">
+      <div className="max-w-max-width mx-auto px-gutter space-y-16">
         {attractions.map((attraction, idx) => {
           const isEven = idx % 2 === 0;
           return (
@@ -128,7 +128,7 @@ export const Atracciones: React.FC = () => {
       </div>
 
       {/* Group / Family CTA */}
-      <section className="max-w-4xl mx-auto px-gutter py-24 text-center mt-32 reveal-item">
+      <section className="max-w-4xl mx-auto px-gutter py-16 text-center mt-16 reveal-item">
         <div className="rounded-3xl border border-secondary/25 bg-[#080c08] p-8 md:p-16 relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_75%)] pointer-events-none"></div>
           <h3 className="font-display text-2xl md:text-3xl text-on-background font-bold mb-4">
