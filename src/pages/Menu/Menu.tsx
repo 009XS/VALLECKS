@@ -107,10 +107,10 @@ export const Menu: React.FC = () => {
         <div className="absolute inset-0 w-full h-full select-none pointer-events-none">
           <img
             alt="Menú de comida"
-            className="w-full h-full object-cover opacity-20 scale-102"
+            className="w-full h-full object-cover opacity-55 scale-102"
             src={images.comida}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/60 via-[#060906]/90 to-[#060906]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/40 via-[#060906]/75 to-[#060906]"></div>
         </div>
         <div className="relative z-10 text-center px-gutter max-w-4xl mx-auto flex flex-col items-center menu-reveal">
           <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-3">
@@ -225,7 +225,7 @@ export const Menu: React.FC = () => {
       {/* Atmospheric Cooking Graphic - Replaced Google URL with Local WebP images.fogatas */}
       <section className="w-full h-64 md:h-[380px] relative overflow-hidden my-24 border-y border-white/5">
         <SmartImage
-          className="w-full h-full object-cover object-center opacity-30 scale-102"
+          className="w-full h-full object-cover object-center opacity-55 scale-102"
           alt="Cocina y fogón campestre"
           src={images.fogatas}
         />

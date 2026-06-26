@@ -52,18 +52,17 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
           <img
             src={images.entradaPrincipal}
             alt="Valle de Rancho Viejo"
-            className="w-full h-full object-cover scale-102 opacity-40"
+            className="w-full h-full object-cover scale-102 opacity-65"
           />
           {/* Deep Cinematic Vignette Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#060906] via-[#060906]/85 to-transparent hidden md:block"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/65 via-[#060906]/90 to-[#060906]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#060906]/85 via-[#060906]/55 to-transparent hidden md:block"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/35 via-[#060906]/75 to-[#060906]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_50%,rgba(212,168,67,0.06)_0%,transparent_70%)]"></div>
         </div>
 
         {/* Hero Content - Asymmetric Split */}
         <div className="relative z-10 max-w-3xl w-full md:pl-16 flex flex-col items-start text-left hero-content">
           <div className="hero-reveal inline-flex items-center gap-3 mb-6 bg-secondary/10 border border-secondary/25 px-4 py-1.5 rounded-full backdrop-blur-md">
-            <span className="w-1.5 h-1.5 bg-secondary rounded-full animate-ping"></span>
             <span className="font-accent text-[9px] md:text-xs font-bold text-secondary uppercase tracking-[0.25em]">
               Refugio de Montaña
             </span>
@@ -190,9 +189,9 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
                 <SmartImage
                   src={images.cuatrimotos}
                   alt="Ruta de cuatrimotos"
-                  className="w-full h-full object-cover opacity-20 transition-all duration-700 group-hover:scale-103 group-hover:opacity-25 select-none pointer-events-none"
+                  className="w-full h-full object-cover opacity-40 transition-all duration-700 group-hover:scale-103 group-hover:opacity-50 select-none pointer-events-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent"></div>
               </div>
               <div className="relative z-10 mb-16">
                 <span className="px-2.5 py-0.5 bg-secondary/15 text-secondary text-[8px] font-extrabold uppercase tracking-widest rounded border border-secondary/35 backdrop-blur-md">
@@ -224,9 +223,9 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
                   <SmartImage
                     src={images.tirolesa}
                     alt="Tirolesa panorámica"
-                    className="w-full h-full object-cover opacity-15 transition-all duration-700 group-hover:scale-103 group-hover:opacity-20 select-none pointer-events-none"
+                    className="w-full h-full object-cover opacity-30 transition-all duration-700 group-hover:scale-103 group-hover:opacity-40 select-none pointer-events-none"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                 </div>
                 <div className="relative z-10">
                   <span className="font-accent text-[8px] font-bold text-secondary uppercase tracking-widest block mb-2">VUELO SOBRE EL VALLE</span>
@@ -246,9 +245,9 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
                   <SmartImage
                     src={images.caballo}
                     alt="Paseo a caballo"
-                    className="w-full h-full object-cover opacity-15 transition-all duration-700 group-hover:scale-103 group-hover:opacity-20 select-none pointer-events-none"
+                    className="w-full h-full object-cover opacity-30 transition-all duration-700 group-hover:scale-103 group-hover:opacity-40 select-none pointer-events-none"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
                 </div>
                 <div className="relative z-10">
                   <span className="font-accent text-[8px] font-bold text-secondary uppercase tracking-widest block mb-2">PASEOS GUIADOS</span>
@@ -273,9 +272,9 @@ export const Home: React.FC<HomeProps> = ({ setCurrentPage }) => {
             <SmartImage
               src={images.comida}
               alt="Cocina de leña"
-              className="w-full h-full object-cover opacity-25 scale-102 select-none pointer-events-none"
+              className="w-full h-full object-cover opacity-55 scale-102 select-none pointer-events-none"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/50 to-black/85"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-black/70"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,168,67,0.04)_0%,transparent_75%)]"></div>
           </div>
 

@@ -52,10 +52,10 @@ export const Barra: React.FC = () => {
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
             alt="Bar campestre de madera"
-            className="w-full h-full object-cover opacity-15 scale-102"
+            className="w-full h-full object-cover opacity-55 scale-102"
             src={images.entradaPrincipal}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/60 via-[#060906]/90 to-[#060906]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#060906]/40 via-[#060906]/75 to-[#060906]"></div>
         </div>
         <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-4 barra-reveal">
           <span className="font-accent text-xs font-bold text-secondary uppercase tracking-[0.3em] block mb-2">
